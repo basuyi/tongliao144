@@ -1,0 +1,21 @@
+# Sensitive files
+.ssh_pass
+.server_ip
+.ak_config
+.env
+
+# Node
+node_modules/
+package-lock.json
+
+# Python
+__pycache__/
+
+# Test screenshots and debug images
+*.png
+tests/screenshots/
+test-screenshots/
+
+# Temp/scratch files
+nul
+*.txt

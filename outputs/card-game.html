@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>144</title>
+<script>
+(function(){
+  var vw=window.innerWidth||1,vh=window.innerHeight||1;
+  var cw=document.documentElement&&document.documentElement.clientWidth||vw;
+  var ch=document.documentElement&&document.documentElement.clientHeight||vh;
+  var dpr=window.devicePixelRatio||1;
+  var sw=screen.width||vw,sh=screen.height||vh;
+  var rawW=sw/dpr,rawH=sh/dpr;
+  var realW,realH;
+  if(rawW<150&&dpr>2.5){realW=sw;realH=sh}
+  else if(rawW<150){realW=window.outerWidth||vw;realH=window.outerHeight||vh}
+  else{realW=rawW;realH=rawH}
+  if(realW>realH){var t=realW;realW=realH;realH=t}
+  var bestW=Math.min(Math.min(vw,cw),realW);
+  var bestH=Math.min(Math.min(vh,ch),realH);
+  var isZoomed=vw>realW*2&&dpr>2;
+  var portrait=bestH>bestW;
+  window._flW=isZoomed?vh:bestH;
+  window._flH=isZoomed?vw:bestW;
+  window._flZoomed=isZoomed;
+  if(portrait){
+    var W=window._flW, H=window._flH;
+    var m, oxx, oyy;
+    if(isZoomed){
+      var s=1,mtx=Math.round((vw-H)/2),mty=Math.round((vh+W)/2);
+      m='matrix(0,'+(-s)+','+s+',0,'+mtx+','+mty+')';
+      oxx='0';oyy='0';
+    }else{
+      var s=W/H;oxx=H/2+'';oyy=W/2+'';
+      m='matrix(0,'+(-s)+','+s+',0,'+oxx+','+oyy+')';
+    }
+    document.write('<style id="flCSS">'+
+      'html,body{margin:0!important;padding:0!important;overflow:hidden!important;background:#05130a!important;height:100%!important}'+
+      '#wrap{position:fixed!important;top:0!important;left:0!important;width:'+W+'px!important;height:'+H+'px!important;'+
+      'transform-origin:'+oxx+'px '+oyy+'px!important;-webkit-transform-origin:'+oxx+'px '+oyy+'px!important;-ms-transform-origin:'+oxx+'px '+oyy+'px!important;'+
+      'transform:'+m+'!important;-webkit-transform:'+m+'!important;-ms-transform:'+m+'!important}'+
+    '</style>');
+  }
+  function reapply(){
+    var el=document.getElementById('flCSS');
+    var W=window._flW,H=window._flH;
+    if(!W||!H)return;
+    var v2=window.innerWidth||1,h2=window.innerHeight||1;
+    if(h2>v2){
+      var zm=window._flZoomed;
+      var m, oxx, oyy;
+      if(zm){
+        var s=1,mtx=Math.round((v2-H)/2),mty=Math.round((h2+W)/2);
+        m='matrix(0,'+(-s)+','+s+',0,'+mtx+','+mty+')';
+        oxx='0';oyy='0';
+      }else{
+        var s=W/H;oxx=H/2+'';oyy=W/2+'';
+        m='matrix(0,'+(-s)+','+s+',0,'+oxx+','+oyy+')';
+      }
+      var css='html,body{margin:0!important;padding:0!important;overflow:hidden!important;background:#05130a!important;height:100%!important}'+
+        '#wrap{position:fixed!important;top:0!important;left:0!important;width:'+W+'px!important;height:'+H+'px!important;'+
+        'transform-origin:'+oxx+'px '+oyy+'px!important;-webkit-transform-origin:'+oxx+'px '+oyy+'px!important;-ms-transform-origin:'+oxx+'px '+oyy+'px!important;'+
+        'transform:'+m+'!important;-webkit-transform:'+m+'!important;-ms-transform:'+m+'!important}';
+      if(el){el.textContent=css}else{var st=document.createElement('style');st.id='flCSS';st.textContent=css;(document.head||document.documentElement).appendChild(st)}
+      var wrap=document.getElementById('wrap');
+      if(wrap){
+        wrap.style.position='fixed';wrap.style.top='0';wrap.style.left='0';
+        wrap.style.width=W+'px';wrap.style.height=H+'px';
+        wrap.style.transformOrigin=oxx+'px '+oyy+'px';
+        wrap.style.webkitTransformOrigin=oxx+'px '+oyy+'px';
+        wrap.style.msTransformOrigin=oxx+'px '+oyy+'px';
+        wrap.style.transform=m;wrap.style.webkitTransform=m;wrap.style.msTransform=m;
+      }
+    }else{if(el)el.textContent='';var wr=document.getElementById('wrap');if(wr){wr.style.cssText=''}}
+  }
+  window.reapply=reapply;
+  if(document.addEventListener)document.addEventListener('DOMContentLoaded',function(){reapply();setTimeout(reapply,200);setTimeout(reapply,600)});
+  window.addEventListener('load',function(){reapply();setTimeout(reapply,200)});
+  window.addEventListener('resize',function(){clearTimeout(window._flrt);window._flrt=setTimeout(reapply,80)});
+  window.addEventListener('orientationchange',function(){setTimeout(reapply,100);setTimeout(reapply,400)});
+  window.addEventListener('pageshow',function(){setTimeout(reapply,150)});
+})();
+</script>
+<script src="game-logic.js?v=2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+body{background:#05130a;color:#fff}
+#wrap{width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;position:relative}
+
+#hdr{display:flex;align-items:center;justify-content:center;padding:3px 10px;background:linear-gradient(180deg,rgba(0,0,0,.85),rgba(0,0,0,.6));flex-shrink:0;gap:10px;height:32px;border-bottom:1px solid rgba(255,215,0,.15);box-shadow:0 1px 8px rgba(0,0,0,.4)}
+.hb{padding:2px 10px;border-radius:8px;font-size:9px;text-align:center;backdrop-filter:blur(4px)}
+#hs{background:rgba(33,150,243,.15);border:1px solid rgba(33,150,243,.35);color:#90caf9}
+#hs .big{font-size:12px;color:#64b5f6;font-weight:800}
+#hh{background:rgba(255,152,0,.15);border:1px solid rgba(255,152,0,.35);color:#ffb74d}
+#hh .big{font-size:13px;color:#ffa726;font-weight:800}
+.lv{padding:2px 7px;border-radius:5px;font-size:8px;font-weight:700}
+.lu{background:rgba(33,150,243,.12);border:1px solid rgba(33,150,243,.3);color:#90caf9}
+.lt{background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.3);color:#ef9a9a}
+
+#tbl{flex:1;display:flex;flex-direction:column;min-height:0;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 45%,#24914a 0%,#1b7a38 25%,#145e2a 50%,#0d4720 75%,#082e15 100%)}
+#tbl::before{content:'';position:absolute;inset:0;background:repeating-conic-gradient(rgba(255,255,255,.006) 0% 25%,transparent 0% 50%) 0 0/36px 36px;pointer-events:none}
+#tbl::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(0,0,0,.35) 100%);pointer-events:none}
+#tbl>*{position:relative;z-index:1}
+
+.pbar{display:flex;align-items:center;justify-content:center;gap:8px;padding:4px 10px;flex-shrink:0;transition:opacity .4s ease}
+.pbar.dim{opacity:.35}
+.pbar.active{opacity:1}
+.pav{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;flex-shrink:0;border:2.5px solid transparent;transition:all .35s ease;position:relative;background:rgba(0,0,0,.3)}
+.pav.tm{color:#64b5f6;border-color:rgba(33,150,243,.4);box-shadow:0 0 8px rgba(33,150,243,.15)}
+.pav.op{color:#ef9a9a;border-color:rgba(244,67,54,.4);box-shadow:0 0 8px rgba(244,67,54,.15)}
+.pbar.active .pav{border-color:#ffd54f!important;box-shadow:0 0 16px rgba(255,215,0,.5),0 0 32px rgba(255,215,0,.2);animation:aglow 1.8s ease-in-out infinite}
+@keyframes aglow{0%,100%{box-shadow:0 0 10px rgba(255,215,0,.3),0 0 20px rgba(255,215,0,.1)}50%{box-shadow:0 0 20px rgba(255,215,0,.6),0 0 40px rgba(255,215,0,.2)}}
+.pnm{font-size:11px;font-weight:700;min-width:42px;padding:1px 6px;border-radius:4px;background:rgba(0,0,0,.25)}
+.pnm.tm{color:#64b5f6;border-bottom:1.5px solid rgba(33,150,243,.3)}.pnm.op{color:#ef9a9a;border-bottom:1.5px solid rgba(244,67,54,.3)}
+.pcnt{font-size:9px;color:rgba(255,255,255,.5);background:rgba(0,0,0,.3);padding:1px 5px;border-radius:8px}
+.pbk{display:flex;gap:1px;flex-shrink:0}
+.pbk i{display:block;width:11px;height:15px;background:linear-gradient(135deg,#1a237e,#303f9f);border:1px solid #5c6bc0;border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.pbk i::after{content:'';display:block;width:5px;height:5px;margin:4px auto 0;border:1px solid rgba(255,255,255,.15);border-radius:50%}
+.pap{display:flex;gap:3px;align-items:center;min-height:22px}
+.pap .ptxt{font-size:10px;color:rgba(255,255,255,.45);padding:3px 8px;background:rgba(0,0,0,.3);border-radius:6px;font-weight:600}
+.psh{display:flex;gap:0;overflow:hidden;max-width:200px}
+
+#mr{flex:1;display:flex;min-height:0}
+.side{width:84px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:5px;transition:opacity .4s ease}
+.side.dim{opacity:.35}.side.active{opacity:1}
+.side.active .pav{border-color:#ffd54f!important;box-shadow:0 0 16px rgba(255,215,0,.5),0 0 32px rgba(255,215,0,.2);animation:aglow 1.8s ease-in-out infinite}
+.side .pbk{flex-direction:column}
+.side .pbk i{width:15px;height:11px}
+.side .pbk i::after{width:4px;height:4px;margin:2px auto 0}
+.side .psh{flex-direction:column;max-height:120px;max-width:none}
+
+#ca{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;min-width:0;padding:10px;overflow-y:auto}
+#ca::before{content:'';position:absolute;width:70%;height:60%;top:20%;left:15%;border-radius:50%;background:rgba(255,255,255,.02);border:1px solid rgba(255,215,0,.06);pointer-events:none}
+#turnInd{font-size:15px;font-weight:800;color:rgba(255,255,255,.4);text-align:center;min-height:20px;margin-bottom:5px;transition:all .4s ease}
+#turnInd.glow{color:#ffd54f;text-shadow:0 0 12px rgba(255,213,79,.5);font-size:16px}
+#cw{font-size:12px;color:rgba(255,255,255,.55);min-height:16px}
+#cc{display:flex;flex-direction:column;align-items:center;gap:6px;margin:5px 0;min-height:30px;width:100%;overflow-y:auto;max-height:100%}
+#ct{font-size:17px;font-weight:800;color:#ffd54f;text-shadow:0 2px 8px rgba(255,213,79,.4);min-height:20px;text-align:center;animation:fadeSlideUp .35s ease-out}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+#mp{display:flex;justify-content:center;gap:3px;min-height:22px;align-items:center;flex-wrap:wrap;position:absolute;bottom:5px;left:50%;transform:translateX(-50%)}
+#mp .ptxt{font-size:10px;color:rgba(255,255,255,.45);padding:3px 8px;background:rgba(0,0,0,.3);border-radius:6px;font-weight:600}
+.tp{display:flex;align-items:center;gap:4px;padding:3px 10px;border-radius:10px;background:rgba(0,0,0,.3);width:fit-content;max-width:100%;backdrop-filter:blur(2px)}
+.tp .tpn{font-size:10px;font-weight:700;flex-shrink:0}
+.tp .tpc{display:flex;gap:1px;flex-shrink:0}
+.tp .tpt{font-size:8px;color:#ffd54f;flex-shrink:0;padding:2px 5px;background:rgba(255,213,79,.15);border-radius:4px}
+.tp.pass{opacity:.45}
+.tp.pass .tpt{background:rgba(255,255,255,.06);color:rgba(255,255,255,.35)}
+.c.sm:first-child{margin-left:0}
+
+#bot{flex-shrink:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.45));border-top:1px solid rgba(255,215,0,.1);transition:box-shadow .4s ease}
+#bot.active{box-shadow:0 -3px 16px rgba(255,215,0,.15)}
+#mi{display:flex;justify-content:space-between;padding:2px 10px;font-size:9px}
+#mi .me{color:#ffd54f;font-weight:800;font-size:11px}
+#ppc{display:flex;flex-wrap:wrap;justify-content:center;gap:0;padding:0 8px;max-height:18px;overflow:hidden;opacity:.5}
+#hw{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:3px 6px;mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}
+#hand{display:flex;justify-content:center;align-items:flex-end;min-height:68px}
+#hand .c:nth-child(n+14){margin-left:-18px}
+#hand .c:nth-child(n+18){margin-left:-22px}
+
+#bar{display:flex;gap:6px;justify-content:center;padding:4px 8px;padding-bottom:max(4px,env(safe-area-inset-bottom));flex-shrink:0;background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.7))}
+#bar button{padding:9px 0;border:none;border-radius:18px;font-size:13px;font-weight:800;cursor:pointer;flex:1;max-width:90px;transition:transform .12s ease,box-shadow .2s ease}
+#bar button:active{transform:scale(.9)}
+#bar button:disabled{opacity:.2;transform:none}
+.bp{background:linear-gradient(135deg,#e65100,#ff8f00);color:#fff;box-shadow:0 3px 10px rgba(255,143,0,.35)}
+.bs{background:rgba(255,255,255,.08);color:#bbb;border:1.5px solid rgba(255,255,255,.15)!important}
+.bh{background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);border:1.5px solid rgba(255,255,255,.08)!important;font-size:10px}
+
+.c{width:48px;height:68px;background:linear-gradient(180deg,#fff 0%,#fafafa 40%,#f0f0f0 100%);border-radius:6px;display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;font-weight:800;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;box-shadow:0 2px 6px rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.9);position:relative;flex-shrink:0;user-select:none;border:1.5px solid rgba(0,0,0,.1);margin-left:-14px}
+.c:first-child{margin-left:0}
+.c:hover{transform:translateY(-5px);box-shadow:0 6px 14px rgba(0,0,0,.3),0 2px 4px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.9)}
+.c.r{color:#c62828}.c.b{color:#1a1a1a}
+.c.sel{transform:translateY(-14px) scale(1.04);border-color:#ffc107;box-shadow:0 8px 20px rgba(255,193,7,.4),0 2px 6px rgba(0,0,0,.2);z-index:2}
+.c .corner{display:flex;flex-direction:column;align-items:center;padding:3px 0 0 4px;line-height:1}
+.c .corner .cv{font-size:13px;font-weight:900;line-height:1.1}
+.c .corner .cs{font-size:11px;line-height:1}
+.c .center-suit{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22px;opacity:.8}
+.c.hui{background:linear-gradient(180deg,#fffde7,#fff9c4 40%,#fff176);border-color:rgba(255,160,0,.4);animation:huiGlow 2s ease-in-out infinite}
+@keyframes huiGlow{0%,100%{box-shadow:0 2px 6px rgba(0,0,0,.3),0 0 8px rgba(255,160,0,.2)}50%{box-shadow:0 2px 6px rgba(0,0,0,.3),0 0 16px rgba(255,160,0,.4)}}
+.c.hui::after{content:"会";position:absolute;bottom:2px;right:3px;font-size:8px;color:#e65100;font-weight:900}
+.c.jr{background:linear-gradient(180deg,#fff,#ffcdd2 50%,#ef9a9a);color:#b71c1c;border-color:rgba(183,28,28,.25)}
+.c.jr .center-suit{font-size:18px}
+.c.jb{background:linear-gradient(180deg,#fff,#cfd8dc 50%,#b0bec5);color:#37474f;border-color:rgba(55,71,79,.25)}
+.c.jb .center-suit{font-size:18px}
+.c.sm{width:42px;height:60px;margin-left:-8px;cursor:default;pointer-events:none;border-radius:5px}
+.c.sm .corner .cv{font-size:11px}.c.sm .corner .cs{font-size:9px}.c.sm .center-suit{font-size:16px}
+.c.sm.hui::after{font-size:6px}
+.c.mn{width:22px;height:30px;margin-left:-4px;cursor:default;pointer-events:none;border-width:1px;border-radius:3px}
+.c.mn:first-child{margin-left:0}
+.c.mn .corner{padding:1px 0 0 1px}
+.c.mn .corner .cv{font-size:7px}.c.mn .corner .cs{font-size:5px}.c.mn .center-suit{font-size:10px}
+.c.mn.hui::after{font-size:4px}
+.c.dealing{animation:dealFly .45s ease-out forwards}
+@keyframes dealFly{from{opacity:0;transform:translate(0,-80px) scale(.5) rotate(20deg)}to{opacity:1;transform:translate(0,0) scale(1) rotate(0)}}
+
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px)}
+#ov.h{display:none}
+.m{background:linear-gradient(180deg,#2e3b42,#1a2429);border-radius:18px;padding:22px;width:100%;max-width:350px;text-align:center;box-shadow:0 12px 48px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);animation:modalPop .3s ease-out}
+@keyframes modalPop{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.m h2{font-size:18px;margin-bottom:10px;color:#ffd54f}
+.m p{font-size:12px;color:rgba(255,255,255,.7);margin-bottom:6px;line-height:1.6}
+.m .big{font-size:32px;margin:8px 0}
+.m .det{font-size:10px;color:rgba(255,255,255,.4)}
+.m button{padding:11px 24px;border:none;border-radius:22px;font-size:14px;font-weight:700;cursor:pointer;margin:5px;background:linear-gradient(135deg,#e65100,#ff8f00);color:#fff;transition:transform .12s ease;box-shadow:0 3px 10px rgba(0,0,0,.3)}
+.m button:active{transform:scale(.93)}
+.m button.alt{background:rgba(255,255,255,.1);color:#bbb;border:1px solid rgba(255,255,255,.12);box-shadow:none}
+.m button.cha-btn{background:linear-gradient(135deg,#c2185b,#f06292);color:#fff;font-size:17px;letter-spacing:2px;padding:12px 28px}
+.m button.dian-btn{background:linear-gradient(135deg,#6a1b9a,#ab47bc);color:#fff;font-size:17px;letter-spacing:2px;padding:12px 28px}
+.m .cpick{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;margin:12px 0;max-height:170px;overflow-y:auto}
+.m .cpick .c{cursor:pointer;margin-left:-2px}.m .cpick .c:first-child{margin-left:0}
+.m .cpick .c.sel{border-color:#e91e63}
+.m .played-show{display:flex;justify-content:center;gap:4px;margin:10px 0;flex-wrap:wrap}
+
+#toast{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.92);color:#fff;padding:12px 26px;border-radius:14px;font-size:15px;font-weight:700;z-index:200;pointer-events:none;opacity:0;transition:opacity .3s ease;white-space:nowrap;border:1px solid rgba(255,255,255,.1);box-shadow:0 4px 20px rgba(0,0,0,.5)}
+#toast.show{opacity:1}
+#toast.cha{font-size:22px;padding:16px 34px;background:rgba(194,24,91,.92);border-color:rgba(240,98,146,.5);color:#fff}
+
+#bigText{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:90;pointer-events:none;opacity:0}
+#bigText.show{animation:bigPop 1.3s ease-out forwards}
+@keyframes bigPop{0%{opacity:0;transform:scale(2.5)}15%{opacity:1;transform:scale(1)}75%{opacity:1;transform:scale(1.05)}100%{opacity:0;transform:scale(.95)}}
+#bigText .bt-inner{font-size:56px;font-weight:900;text-shadow:0 4px 20px rgba(0,0,0,.6),0 0 40px currentColor;letter-spacing:6px}
+
+#actionBar{position:absolute;bottom:0;left:0;right:0;z-index:95;transform:translateY(100%);transition:transform .35s cubic-bezier(.22,.61,.36,1);pointer-events:none}
+#actionBar.show{transform:translateY(0);pointer-events:auto}
+.ab-bg{background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.85));backdrop-filter:blur(10px);padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:center;gap:16px;border-top:1px solid rgba(255,255,255,.08)}
+.ab-btn{padding:12px 32px;border:none;border-radius:24px;font-size:18px;font-weight:900;cursor:pointer;letter-spacing:3px;transition:transform .12s ease;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.ab-btn:active{transform:scale(.92)}
+.ab-btn.cha{background:linear-gradient(135deg,#c2185b,#f06292);color:#fff}
+.ab-btn.dian{background:linear-gradient(135deg,#6a1b9a,#ab47bc);color:#fff}
+.ab-btn.skip{background:rgba(255,255,255,.1);color:#aaa;border:1.5px solid rgba(255,255,255,.15);font-size:14px;letter-spacing:1px;padding:10px 24px}
+.ab-info{display:flex;flex-direction:column;align-items:center;gap:3px}
+.ab-info .ab-label{font-size:11px;color:rgba(255,255,255,.5)}
+.ab-info .ab-cards{display:flex;gap:3px}
+.ab-timer{position:relative;width:44px;height:44px;flex-shrink:0}
+.ab-timer svg{transform:rotate(-90deg)}
+.ab-timer .ab-timer-bg{fill:none;stroke:rgba(255,255,255,.1);stroke-width:3}
+.ab-timer .ab-timer-fg{fill:none;stroke:#ffd54f;stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+.ab-timer .ab-timer-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#ffd54f}
+
+.radar{position:absolute;top:50%;left:50%;width:80px;height:80px;transform:translate(-50%,-50%);pointer-events:none;z-index:80}
+.radar::before{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,213,79,.2);animation:radarPing 1.5s ease-out infinite}
+.radar::after{content:'';position:absolute;inset:25%;border-radius:50%;background:rgba(255,213,79,.15);animation:radarCore 1.5s ease-in-out infinite}
+@keyframes radarPing{0%{transform:scale(.5);opacity:1}100%{transform:scale(2);opacity:0}}
+@keyframes radarCore{0%,100%{transform:scale(.8);opacity:.3}50%{transform:scale(1.2);opacity:.8}}
+.radar-text{position:absolute;top:50%;left:50%;transform:translate(-50%,36px);font-size:12px;color:rgba(255,213,79,.7);white-space:nowrap;font-weight:600}
+
+@keyframes bombShake{0%,100%{transform:translate(0,0)}10%{transform:translate(-4px,-3px)}20%{transform:translate(4px,3px)}30%{transform:translate(-3px,4px)}40%{transform:translate(3px,-4px)}50%{transform:translate(-4px,2px)}60%{transform:translate(4px,-2px)}70%{transform:translate(-2px,4px)}80%{transform:translate(2px,-3px)}90%{transform:translate(-3px,3px)}}
+@keyframes bombFlash{0%{box-shadow:inset 0 0 0 rgba(255,69,0,0)}25%{box-shadow:inset 0 0 80px rgba(255,69,0,.35)}100%{box-shadow:inset 0 0 0 rgba(255,69,0,0)}}
+@keyframes typeFlash{0%{box-shadow:inset 0 0 0 rgba(255,215,0,0)}30%{box-shadow:inset 0 0 50px rgba(255,215,0,.2)}100%{box-shadow:inset 0 0 0 rgba(255,215,0,0)}}
+@keyframes chaFlash{0%{box-shadow:inset 0 0 0 rgba(240,98,146,0)}25%{box-shadow:inset 0 0 70px rgba(240,98,146,.35)}100%{box-shadow:inset 0 0 0 rgba(240,98,146,0)}}
+@keyframes dianFlash{0%{box-shadow:inset 0 0 0 rgba(156,39,176,0)}25%{box-shadow:inset 0 0 70px rgba(156,39,176,.35)}100%{box-shadow:inset 0 0 0 rgba(156,39,176,0)}}
+.bomb-shake{animation:bombShake .55s ease-in-out}
+.bomb-flash{animation:bombFlash .65s ease-out}
+.type-flash{animation:typeFlash .5s ease-out}
+.cha-flash{animation:chaFlash .55s ease-out}
+.dian-flash{animation:dianFlash .55s ease-out}
+
+@media(max-width:600px){
+  .side{width:66px;padding:3px}
+  .pav{width:34px;height:34px;font-size:13px}
+  .c{width:40px;height:58px;margin-left:-12px}
+  .c .corner .cv{font-size:11px}.c .corner .cs{font-size:9px}.c .center-suit{font-size:18px}
+  .c.sm{width:36px;height:52px;margin-left:-6px}
+  .c.sm .corner .cv{font-size:9px}.c.sm .center-suit{font-size:14px}
+  #hand{min-height:60px}
+  #ct{font-size:14px}
+  #turnInd{font-size:13px}
+  .ab-btn{font-size:15px;padding:10px 24px}
+}
+@media(min-width:800px){
+  .side{width:104px}
+  .pav{width:46px;height:46px;font-size:18px}
+  .c{width:56px;height:78px;margin-left:-16px}
+  .c .corner .cv{font-size:15px}.c .center-suit{font-size:26px}
+  .c.sm{width:50px;height:70px;margin-left:-10px}
+  .c.sm .corner .cv{font-size:13px}.c.sm .center-suit{font-size:20px}
+  #hand{min-height:80px}
+  #ct{font-size:20px}
+  #turnInd{font-size:18px}
+}
+
+#connStatus{position:fixed;top:34px;right:5px;font-size:8px;padding:2px 7px;border-radius:6px;z-index:50;pointer-events:none}
+#connStatus.online{background:rgba(76,175,80,.2);color:#81c784;border:1px solid rgba(76,175,80,.3)}
+#connStatus.offline{background:rgba(158,158,158,.12);color:#999;border:1px solid rgba(158,158,158,.15)}
+
+.lobby-btn{display:block;width:100%;padding:14px;margin:6px 0;border:none;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;transition:transform .12s ease}
+.lobby-btn:active{transform:scale(.95)}
+.lobby-btn.primary{background:linear-gradient(135deg,#e65100,#ff8f00);color:#fff}
+.lobby-btn.secondary{background:rgba(255,255,255,.08);color:#ccc;border:1px solid rgba(255,255,255,.12)}
+.lobby-btn.online{background:linear-gradient(135deg,#1565c0,#42a5f5);color:#fff}
+.lobby-input{width:100%;padding:10px 14px;border:1px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(0,0,0,.3);color:#fff;font-size:13px;margin:5px 0;outline:none}
+.lobby-input:focus{border-color:rgba(66,165,245,.5)}
+.lobby-input::placeholder{color:rgba(255,255,255,.25)}
+.room-id{font-size:24px;font-weight:900;color:#64b5f6;letter-spacing:4px;margin:10px 0}
+.player-slots{display:flex;gap:6px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.player-slot{padding:6px 12px;border-radius:10px;font-size:11px;font-weight:700;min-width:55px;text-align:center}
+.player-slot.filled{background:rgba(76,175,80,.15);color:#81c784;border:1px solid rgba(76,175,80,.3)}
+.player-slot.empty{background:rgba(255,255,255,.04);color:rgba(255,255,255,.3);border:1px dashed rgba(255,255,255,.1)}
+.player-slot.host{background:rgba(255,193,7,.15);color:#ffd54f;border:1px solid rgba(255,193,7,.3)}
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="connStatus" class="offline">单机模式</div>
+<div id="hdr">
+  <div class="hb" id="hs"><span>台上 </span><span class="big" id="stTxt">--</span></div>
+  <span class="lv lu" id="lU">我方:3</span>
+  <span class="lv lt" id="lT">对方:3</span>
+  <div class="hb" id="hh"><span>会儿 </span><span class="big" id="hTxt">3</span></div>
+</div>
+<div id="tbl">
+  <!-- 上方:队友 -->
+  <div class="pbar" id="b2">
+    <div class="pav tm" id="av2">队</div>
+    <span class="pnm tm" id="n2">队友</span>
+    <span class="pcnt" id="c2">0张</span>
+    <div class="pbk" id="k2"></div>
+    <div class="pap" id="a2"></div>
+    <div class="psh" id="pc2"></div>
+  </div>
+  <!-- 中间行 -->
+  <div id="mr">
+    <!-- 左对手 -->
+    <div class="side" id="b1">
+      <div class="pav op" id="av1">左</div>
+      <span class="pnm op" id="n1">左对手</span>
+      <span class="pcnt" id="c1">0张</span>
+      <div class="pbk" id="k1"></div>
+      <div class="pap" id="a1"></div>
+      <div class="psh" id="pc1"></div>
+    </div>
+    <!-- 中央 -->
+    <div id="ca">
+      <div id="turnInd"></div>
+      <div id="cw"></div>
+      <div id="cc"></div>
+      <div id="tks"></div>
+      <div id="ct"></div>
+      <div id="mp"></div>
+    </div>
+    <!-- 右对手 -->
+    <div class="side" id="b3">
+      <div class="pav op" id="av3">右</div>
+      <span class="pnm op" id="n3">右对手</span>
+      <span class="pcnt" id="c3">0张</span>
+      <div class="pbk" id="k3"></div>
+      <div class="pap" id="a3"></div>
+      <div class="psh" id="pc3"></div>
+    </div>
+  </div>
+  <!-- 底部:我 -->
+  <div id="bot">
+    <div class="pbar" id="b0" style="padding:2px 8px">
+      <div class="pav tm" id="av0">我</div>
+      <span class="pnm tm" id="ml">我(0)</span>
+      <span id="ms" style="font-size:9px;color:rgba(255,255,255,.3)"></span>
+      <div class="psh" id="ppc"></div>
+    </div>
+    <div id="hw"><div id="hand"></div></div>
+  </div>
+</div>
+<div id="bigText"><span class="bt-inner"></span></div>
+<div id="actionBar"><div class="ab-bg" id="abInner"></div></div>
+<div id="bar">
+  <button class="bh" id="bH" onclick="actHint()">提示</button>
+  <button class="bs" id="bPs" onclick="actPass()" disabled>不出</button>
+  <button class="bp" id="bP" onclick="actPlay()">出牌</button>
+</div>
+
+<script>
+// 强制横屏在 <head> 中已处理，此处只保留全局尺寸变量供 toast/showOv 使用
+let _wrapW=0,_wrapH=0;
+function _syncWrapDim(){let w=document.getElementById('wrap');if(w){_wrapW=w.offsetWidth;_wrapH=w.offsetHeight}else{let vw=window.innerWidth,vh=window.innerHeight;if(vh>vw){_wrapW=vh;_wrapH=vw}else{_wrapW=vw;_wrapH=vh}}}
+_syncWrapDim();
+window.addEventListener('resize',_syncWrapDim);
+window.addEventListener('orientationchange',function(){setTimeout(_syncWrapDim,100)});
+
+const S=['hearts','diamonds','clubs','spades'],SYM={hearts:'♥',diamonds:'♦',clubs:'♣',spades:'♠'},
+RN={3:'3',4:'4',5:'5',6:'6',7:'7',8:'8',9:'9',10:'10',11:'J',12:'Q',13:'K',14:'A',15:'2',16:'小王',17:'大王'},
+LN={3:'3',4:'4',5:'5',6:'6',7:'7',8:'8',9:'9',10:'10',11:'J',12:'Q',13:'K',14:'A'},
+PN=['你','左对手','队友','右对手'],
+TCN={single:'单张',pair:'对子',straight:'单龙',t32:'三带二',b3:'炸弹',b4:'大炸弹',dj:'双王',a44:'A44'};
+function red(s){return s==='hearts'||s==='diamonds'}
+function shuf(a){for(let i=a.length-1;i>0;i--){let j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
+function $(id){return document.getElementById(id)}
+function sl(ms){return new Promise(r=>setTimeout(r,ms))}
+let G={ph:'idle',turn:0,lv:[3,3,3,3],stg:[true,false,true,false],
+  hd:[[],[],[],[]],hui:3,lp:null,lpp:-1,ps:0,
+  dn:[false,false,false,false],ord:[],
+  played:[[],[],[],[]],
+  sel:[],hnt:0,busy:false,rnd:0,noTr:false,win:-1};
+function ef(c,h){if(c.r===16)return 16;if(c.r===17)return 17;if(c.r===h&&c.r>=3&&c.r<=14)return 15.5;return c.r}
+function isH(c,h){return c.r===h&&c.r>=3&&c.r<=14}
+function srt(hd,h){return hd.slice().sort((a,b)=>{let x=ef(a,h),y=ef(b,h);return x!==y?x-y:S.indexOf(a.suit)-S.indexOf(b.suit)})}
+function deal(){let dk=shuf((()=>{let d=[];for(let s of S)for(let r=3;r<=15;r++)d.push({suit:s,r,id:s+'_'+r});d.push({suit:'joker',r:16,id:'jb'},{suit:'joker',r:17,id:'jr'});return d})()),h=[[],[],[],[]];for(let i=0;i<52;i++)h[i%4].push(dk[i]);let lf=[dk[52],dk[53]],h3=-1;for(let p=0;p<4;p++)if(h[p].some(c=>c.suit==='hearts'&&c.r===3)){h3=p;break}if(h3<0)h3=0;h[h3].push(...lf);for(let p=0;p<4;p++)h[p]=srt(h[p],G.hui);G.hd=h;G.dn=[false,false,false,false];G.ord=[];G.lp=null;G.lpp=-1;G.ps=0;G.sel=[];G.played=[[],[],[],[]];return h3}
+function detect(cards,h){
+  if(!cards||!cards.length)return null;let n=cards.length;
+  if(n===3){let hasA=cards.some(c=>c.r===14),fs=cards.filter(c=>c.r===4);if(hasA&&fs.length===2){let ar=cards.every(c=>red(c.suit));return{type:'a44',rk:ar?300:299,cards}}}
+  if(n===1)return{type:'single',rk:ef(cards[0],h),cards};
+  if(n===2){if(cards[0].r===cards[1].r)return{type:'pair',rk:ef(cards[0],h),cards};if(cards.some(c=>c.r===16)&&cards.some(c=>c.r===17))return{type:'dj',rk:250,cards};return null}
+  if(n===3&&cards.every(c=>c.r===cards[0].r))return{type:'b3',rk:ef(cards[0],h),cards};
+  if(n===4&&cards.every(c=>c.r===cards[0].r))return{type:'b4',rk:ef(cards[0],h),cards};
+  if(n===5){let cnt={};cards.forEach(c=>cnt[c.r]=(cnt[c.r]||0)+1);let tr=Object.entries(cnt).find(e=>e[1]===3),pr=Object.entries(cnt).find(e=>e[1]===2);if(tr&&pr){let tc=cards.find(c=>c.r===+tr[0]);return{type:'t32',rk:ef(tc,h),cards}}}
+  if(n>=3){let noHui=cards.every(c=>!isH(c,h));if(noHui){let ranks=cards.map(c=>c.r).sort((a,b)=>a-b);let noDup=true;for(let i=0;i<ranks.length-1;i++)if(ranks[i]===ranks[i+1]){noDup=false;break}if(noDup&&ranks[ranks.length-1]-ranks[0]===n-1)return{type:'straight',rk:ranks[ranks.length-1],cards}}}
+  return null;
+}
+const BM=['b3','b4','dj','a44'],BO={b3:1,b4:2,dj:3,a44:4};
+function beats(np,lp){if(!lp)return true;let ni=BM.includes(np.type)?BO[np.type]:0,li=BM.includes(lp.type)?BO[lp.type]:0;if(ni&&li){if(ni!==li)return ni>li;return np.rk>lp.rk}if(ni)return true;if(li)return false;if(np.type!==lp.type)return false;if(np.cards.length!==lp.cards.length)return false;return np.rk>lp.rk}
+function allPlays(hand,lp,h){let ps=[],s=srt(hand,h),rc={};s.forEach(c=>{if(!rc[c.r])rc[c.r]=[];rc[c.r].push(c)});if(!lp){let seen=new Set();for(let c of s){if(!seen.has(c.r)){ps.push({type:'single',rk:ef(c,h),cards:[c]});seen.add(c.r)}}for(let[r,cs]of Object.entries(rc)){if(cs.length>=2)ps.push({type:'pair',rk:ef(cs[0],h),cards:cs.slice(0,2)});if(cs.length>=3)ps.push({type:'b3',rk:ef(cs[0],h),cards:cs.slice(0,3)});if(cs.length>=4)ps.push({type:'b4',rk:ef(cs[0],h),cards:cs.slice(0,4)});}for(let[r,cs]of Object.entries(rc))if(cs.length>=3){let pe=Object.entries(rc).find(([r2,c2])=>+r2!==+r&&c2.length>=2);if(pe)ps.push({type:'t32',rk:ef(cs[0],h),cards:[...cs.slice(0,3),...pe[1].slice(0,2)]})}{let uR=Object.keys(rc).map(Number).filter(r=>r!==h&&r>=3&&r<=15).sort((a,b)=>a-b);for(let si=0;si<uR.length;si++){let straight=[],end=si;while(end<uR.length&&uR[end]===uR[si]+(end-si)&&uR[end]<=14){straight.push(rc[uR[end]][0]);end++;if(straight.length>=3)ps.push({type:'straight',rk:uR[end-1],cards:straight.slice()})}}}let ac=s.filter(c=>c.r===14),fc=s.filter(c=>c.r===4);if(ac.length&&fc.length>=2){let a=[ac[0],fc[0],fc[1]];ps.push({type:'a44',rk:a.every(c=>red(c.suit))?300:299,cards:a})}let bj=s.find(c=>c.r===16),rj=s.find(c=>c.r===17);if(bj&&rj)ps.push({type:'dj',rk:250,cards:[bj,rj]});return ps;}let lt=lp.type,lr=lp.rk,lB=BM.includes(lt);if(!lB){if(lt==='single')for(let c of s)if(ef(c,h)>lr)ps.push({type:'single',rk:ef(c,h),cards:[c]});if(lt==='pair')for(let[r,cs]of Object.entries(rc))if(cs.length>=2&&ef(cs[0],h)>lr)ps.push({type:'pair',rk:ef(cs[0],h),cards:cs.slice(0,2)});if(lt==='t32')for(let[r,cs]of Object.entries(rc))if(cs.length>=3&&ef(cs[0],h)>lr){let pe=Object.entries(rc).find(([r2,c2])=>+r2!==+r&&c2.length>=2);if(pe)ps.push({type:'t32',rk:ef(cs[0],h),cards:[...cs.slice(0,3),...pe[1].slice(0,2)]})}if(lt==='straight'){let ln=lp.cards.length;let uR=Object.keys(rc).map(Number).filter(r=>r!==h&&r>=3&&r<=14).sort((a,b)=>a-b);for(let si=0;si<=uR.length-ln;si++){let ok=true;for(let j=0;j<ln;j++){if(uR[si+j]!==uR[si]+j){ok=false;break}}if(ok&&uR[si+ln-1]>lr){let st=[];for(let j=0;j<ln;j++)st.push(rc[uR[si+j]][0]);ps.push({type:'straight',rk:uR[si+ln-1],cards:st})}}}}for(let[r,cs]of Object.entries(rc)){if(cs.length>=3&&(!lB||BO.b3>BO[lt]||(BO.b3===BO[lt]&&ef(cs[0],h)>lr)))ps.push({type:'b3',rk:ef(cs[0],h),cards:cs.slice(0,3)});if(cs.length>=4&&(!lB||BO.b4>BO[lt]||(BO.b4===BO[lt]&&ef(cs[0],h)>lr)))ps.push({type:'b4',rk:ef(cs[0],h),cards:cs.slice(0,4)});}if(!lB||BO.dj>BO[lt]){let bj=s.find(c=>c.r===16),rj=s.find(c=>c.r===17);if(bj&&rj)ps.push({type:'dj',rk:250,cards:[bj,rj]})}if(!lB||BO.a44>BO[lt]){let ac=s.filter(c=>c.r===14),fc=s.filter(c=>c.r===4);if(ac.length&&fc.length>=2){let a=[ac[0],fc[0],fc[1]];ps.push({type:'a44',rk:a.every(c=>red(c.suit))?300:299,cards:a})}}if(lt==='a44'){let ac=s.filter(c=>c.r===14),fc=s.filter(c=>c.r===4);if(ac.length&&fc.length>=2){let a=[ac[0],fc[0],fc[1]],ar=a.every(c=>red(c.suit)),rk=ar?300:299;if(rk>lr)ps.push({type:'a44',rk,cards:a})}}if(lt==='single'&&lp.cards[0].r===4){let fours=rc[4]||[];if(fours.length>=2)ps.push({type:'cha',rk:999,cards:fours.slice(0,2)})}if(lt==='pair'&&lp.cards[0].r===4){let fours=rc[4]||[];if(fours.length>=1)ps.push({type:'dian',rk:999,cards:[fours[0]]})}return ps;}
+function aiPick(pi){let hand=G.hd[pi];if(!hand.length)return null;let free=!G.lp||G.lpp===pi,plays=allPlays(hand,free?null:G.lp,G.hui);if(!plays.length)return null;let nb=plays.filter(p=>!BM.includes(p.type)),bm=plays.filter(p=>BM.includes(p.type));if(free){if(nb.length){nb.sort((a,b)=>a.rk-b.rk);return nb[0]}bm.sort((a,b)=>a.rk-b.rk);return bm[0]}if(G.lpp%2===pi%2)return null;if(nb.length){nb.sort((a,b)=>a.rk-b.rk);return nb[0]}if(hand.length<=4){bm.sort((a,b)=>a.rk-b.rk);return bm[0]}return null}
+function playFX(type){let ca=$('ca');if(!ca)return;if(type==='b3'||type==='b4'||type==='dj'||type==='a44'){ca.classList.add('bomb-shake');let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className=type==='a44'?'cha-flash':'bomb-flash';ca.appendChild(ov);setTimeout(()=>{ca.classList.remove('bomb-shake');ov.remove()},700);return}if(type==='cha'){let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className='cha-flash';ca.appendChild(ov);setTimeout(()=>ov.remove(),600);return}if(type==='dian'){let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className='dian-flash';ca.appendChild(ov);setTimeout(()=>ov.remove(),600);return}let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className='type-flash';ca.appendChild(ov);setTimeout(()=>ov.remove(),550)}
+function showBigText(text,color){let bt=$('bigText');if(!bt)return;bt.querySelector('.bt-inner').textContent=text;bt.querySelector('.bt-inner').style.color=color||'#fff';bt.classList.remove('show');void bt.offsetWidth;bt.classList.add('show');setTimeout(()=>bt.classList.remove('show'),1400)}
+function mkC(c,cls,sel){let d=document.createElement('div'),col=red(c.suit)?'r':'b',ex='';if(isH(c,G.hui))ex=' hui';if(c.r===17)ex=' jr';if(c.r===16)ex=' jb';d.className=`c ${col}${ex} ${cls||''} ${sel?'sel':''}`;if(c.r>=16){let label=c.r===17?'大':'小';d.innerHTML=`<div class="corner"><span class="cv">${label}</span><span class="cs">王</span></div><span class="center-suit">🃏</span>`}else{let val=RN[c.r];let sym=SYM[c.suit]||'';d.innerHTML=`<div class="corner"><span class="cv">${val}</span><span class="cs">${sym}</span></div><span class="center-suit">${sym}</span>`}return d}
+function cardHTML(c,cls){let col=red(c.suit)?'r':'b',ex='';if(c.r===G.hui&&c.r>=3&&c.r<=14)ex=' hui';if(c.r===17)ex=' jr';if(c.r===16)ex=' jb';let extra=cls||'';if(c.r>=16){let label=c.r===17?'大':'小';return `<div class="c ${col}${ex} ${extra}" style="cursor:default"><div class="corner"><span class="cv">${label}</span><span class="cs">王</span></div><span class="center-suit">🃏</span></div>`}let val=RN[c.r],sym=SYM[c.suit]||'';return `<div class="c ${col}${ex} ${extra}" style="cursor:default"><div class="corner"><span class="cv">${val}</span><span class="cs">${sym}</span></div><span class="center-suit">${sym}</span></div>`}
+
+function render(){
+  let st=G.stg[0]?0:1;
+  $('stTxt').textContent=st===0?'我方':'对方';$('stTxt').style.color=st===0?'#64b5f6':'#ef9a9a';
+  $('lU').textContent=`我方:${LN[G.lv[0]]||'过关'}${G.stg[0]?' ★':''}`;
+  $('lT').textContent=`对方:${LN[G.lv[1]]||'过关'}${G.stg[1]?' ★':''}`;
+  $('hTxt').textContent=RN[G.hui]||G.hui;
+  let isPlay=G.ph==='play';
+  // 更新四个玩家面板
+  for(let p=0;p<=3;p++){
+    let act=isPlay&&G.turn===p&&!G.busy;
+    let panel=$(p===0?'b0':'b'+p);
+    if(panel){panel.classList.toggle('active',act);panel.classList.toggle('dim',isPlay&&!act&&!G.busy)}
+    let tc=p%2===0?'tm':'op';
+    let dn;
+    if(ONLINE.active&&ONLINE.nickNames&&ONLINE.nickNames[p])dn=ONLINE.nickNames[p];
+    else{let tn=p%2===0?'队友':'对手';dn=p===0?'你':p===1?'左对手':p===2?'队友(对面)':'右对手'}
+    let av=$('av'+p);if(av){av.className='pav '+tc;av.textContent=dn.charAt(0)}
+    let nm=$('n'+p);if(nm){nm.className='pnm '+tc;nm.textContent=dn+(G.dn[p]?' ✓':'')}
+    let cc=$('c'+p);if(cc)cc.textContent=G.hd[p].length+'张';
+    let bk=$('k'+p);if(bk){bk.innerHTML='';for(let i=0;i<G.hd[p].length;i++){let e=document.createElement('i');bk.appendChild(e)}}
+    let pc=$('pc'+p);if(pc){pc.innerHTML='';let recent=G.played[p].slice(-10);recent.forEach(c=>pc.appendChild(mkC(c,'mn')))}
+  }
+  // 中央 - 清晰显示当前出牌
+  $('cw').textContent='';$('cc').innerHTML='';$('ct').textContent='';let tks=$('tks');if(tks)tks.innerHTML='';
+  if(G.lp){
+    let whoName=(ONLINE.active&&ONLINE.nickNames&&ONLINE.nickNames[G.lpp])?ONLINE.nickNames[G.lpp]:PN[G.lpp];
+    let tc=G.lpp%2===0?'#64b5f6':'#ef9a9a';
+    let cw=$('cw');cw.innerHTML='<span style="color:'+tc+';font-weight:900;font-size:14px">'+whoName+'</span> 出牌';
+    G.lp.cards.forEach(c=>$('cc').appendChild(mkC(c,'sm')));
+    let tn=TCN[G.lp.type]||'';if(G.lp.type==='straight')tn='🐉 单龙('+G.lp.cards.length+'张)';if(G.lp.type==='b3')tn='💣 炸弹(三条)';if(G.lp.type==='b4')tn='💣💣 大炸弹';if(G.lp.type==='dj')tn='👑 双王';if(G.lp.type==='a44')tn='💥 A44';if(G.lp.type==='pair')tn='对子';if(G.lp.type==='single')tn='单张';if(G.lp.type==='t32')tn='三带二';$('ct').textContent=tn;
+  } else { let cw=$('cw');cw.innerHTML='<span style="color:rgba(255,255,255,.3)">自由出牌</span>'; }
+  // 回合指示
+  let ti=$('turnInd');
+  if(isPlay&&!G.busy){let tn=(ONLINE.active&&ONLINE.nickNames&&ONLINE.nickNames[G.turn])?ONLINE.nickNames[G.turn]:PN[G.turn];if(G.turn===0){ti.textContent='👉 轮到你出牌';ti.className='glow'}else{ti.textContent=tn+' 思考中...';ti.className=''}}else{ti.textContent='';ti.className=''}
+  // 手牌
+  let hd=G.hd[0];let myLabel=ONLINE.active&&ONLINE.nick?ONLINE.nick:'我';$('ml').textContent=`${myLabel}(${hd.length})`;
+  let hw=$('hand');hw.innerHTML='';let sorted=srt(hd,G.hui);G.hd[0]=sorted;
+  sorted.forEach((c,i)=>{let el=mkC(c,'',G.sel.includes(c.id));el.onclick=()=>togSel(c.id);if(G._dealing){el.classList.add('dealing');el.style.animationDelay=(i*40)+'ms'}hw.appendChild(el)});
+  let ppc=$('ppc');if(ppc){ppc.innerHTML='';let myRecent=G.played[0].slice(-12);myRecent.forEach(c=>ppc.appendChild(mkC(c,'mn')))}
+  let st2=$('ms');let humanAct=isPlay&&G.turn===0&&!G.busy;
+  $('bot').classList.toggle('active',humanAct);
+  if(humanAct){st2.textContent='👉 轮到你';st2.style.color='#ffd54f'}else{st2.textContent=G.dn[0]?'✓出完':'等待';st2.style.color='rgba(255,255,255,.3)'}
+  $('bP').disabled=!humanAct;$('bPs').disabled=!humanAct||(!G.lp||G.lpp===0);
+}
+function togSel(id){if(G.ph!=='play'||G.turn!==0||G.busy)return;let i=G.sel.indexOf(id);if(i>=0)G.sel.splice(i,1);else G.sel.push(id);render()}
+function showAP(pi,cards,pass){let el=pi===0?$('mp'):$('a'+pi);el.innerHTML='';if(pass){el.innerHTML='<span class="ptxt">不出</span>';return}if(cards){let dirs=[{x:0,y:20},{x:-20,y:0},{x:0,y:-20},{x:20,y:0}];cards.forEach((c,i)=>{let d=mkC(c,'sm');el.appendChild(d);let dx=dirs[pi].x,dy=dirs[pi].y;d.animate([{opacity:0,transform:`translate(${dx}px,${dy}px) scale(0.85)`},{opacity:1,transform:'translate(0,0) scale(1)'}],{duration:350,delay:i*70,fill:'forwards',easing:'cubic-bezier(.22,.61,.36,1)'})})}}
+let _tt;function toast(msg,dur=1400,cls=''){let t=$('toast');if(!t){t=document.createElement('div');t.id='toast';let w=$('wrap');(w||document.body).appendChild(t)}t.textContent=msg;t.className='show'+(cls?' '+cls:'');clearTimeout(_tt);_tt=setTimeout(()=>t.className='',dur)}
+function showOv(h){let ov=$('ov');let w=$('wrap');if(!ov){ov=document.createElement('div');ov.id='ov';if(w)w.appendChild(ov);else document.body.appendChild(ov)}if(ov.parentNode!==w&&w){w.appendChild(ov)}ov.style.cssText='position:absolute;inset:0;background:rgba(0,0,0,.8);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px)';ov.innerHTML=h;ov.classList.remove('h')}
+function hideOv(){let ov=$('ov');if(ov){ov.classList.add('h');ov.style.display='none'}}
+async function checkChaDian(srcPlayer,play){if(play.type!=='single')return false;let srcCard=play.cards[0];let chaR=srcCard.r;let chaCandidates=[];for(let i=1;i<=3;i++){let p=(srcPlayer+i)%4;if(G.dn[p])continue;if(G.hd[p].filter(c=>c.r===chaR).length>=2)chaCandidates.push(p)}if(chaCandidates.length===0)return false;showOv(`<div style="text-align:center"><div class="radar"></div><div class="radar-text">检查岔牌中...</div></div>`);await sl(700);let chaPlayer=-1;for(let i=1;i<=3;i++){let p=(srcPlayer+i)%4;if(G.dn[p])continue;let fs=G.hd[p].filter(c=>c.r===chaR);if(fs.length<2)continue;if(p===0){hideOv();let didCha=await askHumanCha(srcPlayer,srcCard,fs);if(didCha){chaPlayer=0;break}}else{await sl(800+Math.random()*500);if(Math.random()>0.3){let chaPlay={type:'pair',rk:ef(fs[0],G.hui),cards:fs.slice(0,2)};execPlay(p,chaPlay);G._fromCha=true;showAP(p,chaPlay.cards,false);playFX('cha');showBigText('岔!','#f06292');await sl(400);chaPlayer=p;break}}}if(chaPlayer<0){hideOv();return false}hideOv();showOv(`<div style="text-align:center"><div class="radar"></div><div class="radar-text">检查点牌中...</div></div>`);await sl(600);let didDian=false;for(let i=1;i<=3;i++){let p=(chaPlayer+i)%4;if(G.dn[p]||p===chaPlayer)continue;let hasMatch=G.hd[p].some(c=>c.r===chaR);if(!hasMatch)continue;if(p===0){hideOv();let dd=await askHumanDian(chaR);if(dd){G.lp=null;G.lpp=0;G.ps=0;didDian=true;break}}else{await sl(700+Math.random()*400);if(Math.random()>0.5){let f=G.hd[p].find(c=>c.r===chaR);let dp={type:'single',rk:ef(f,G.hui),cards:[f]};execPlay(p,dp);showAP(p,dp.cards,false);playFX('dian');G.lp=null;G.lpp=p;G.ps=0;showBigText('点!','#ab47bc');await sl(400);didDian=true;break}}}hideOv();if(!didDian){G.lp=null;G.lpp=chaPlayer;G.ps=0}return true}
+function askHumanCha(srcPlayer,srcCard,fours){return new Promise(resolve=>{let cd=10,tmr=null,done=false;let ab=$('actionBar'),inner=$('abInner');let rName=RN[srcCard.r],circ=2*Math.PI*19;let cardPrev=fours.slice(0,2).map(c=>cardHTML(c,'mn')).join('');inner.innerHTML='<div style="display:flex;align-items:center;gap:4px;margin-right:8px">'+cardPrev+'</div><button class="ab-btn cha" id="abCha">岔!</button><button class="ab-btn skip" id="abSkip">跳过</button><div class="ab-timer"><svg width="44" height="44" viewBox="0 0 44 44"><circle class="ab-timer-bg" cx="22" cy="22" r="19"/><circle class="ab-timer-fg" id="abRing" cx="22" cy="22" r="19" stroke-dasharray="'+circ+'" stroke-dashoffset="0"/></svg><div class="ab-timer-txt" id="abCd">'+cd+'</div></div>';function hide(){ab.classList.remove('show')}function decl(){if(done)return;done=true;clearInterval(tmr);hide();resolve(false)}$('abSkip').onclick=decl;$('abCha').onclick=async()=>{if(done)return;done=true;clearInterval(tmr);hide();await sl(200);let cp={type:'pair',rk:ef(fours[0],G.hui),cards:fours.slice(0,2)};execPlay(0,cp);G._fromCha=true;showAP(0,cp.cards,false);playFX('cha');showBigText('岔!','#f06292');await sl(300);resolve(true)};ab.classList.add('show');tmr=setInterval(()=>{cd--;let el=$('abCd'),ring=$('abRing');if(el)el.textContent=cd;if(ring)ring.style.strokeDashoffset=((10-cd)/10)*circ;if(cd<=0)decl()},1000)})}
+function askHumanDian(chaRank){return new Promise(resolve=>{let f=G.hd[0].find(c=>c.r===chaRank);if(!f){resolve(false);return}let cd=10,tmr=null,done=false;let ab=$('actionBar'),inner=$('abInner');let circ=2*Math.PI*19;inner.innerHTML='<div style="display:flex;align-items:center;gap:4px;margin-right:8px">'+cardHTML(f,'mn')+'</div><button class="ab-btn dian" id="abDian">点!</button><button class="ab-btn skip" id="abSkip2">跳过</button><div class="ab-timer"><svg width="44" height="44" viewBox="0 0 44 44"><circle class="ab-timer-bg" cx="22" cy="22" r="19"/><circle class="ab-timer-fg" id="abRing2" cx="22" cy="22" r="19" stroke-dasharray="'+circ+'" stroke-dashoffset="0"/></svg><div class="ab-timer-txt" id="abCd2">'+cd+'</div></div>';function hide(){ab.classList.remove('show')}function decl(){if(done)return;done=true;clearInterval(tmr);hide();resolve(false)}$('abSkip2').onclick=decl;$('abDian').onclick=async()=>{if(done)return;done=true;clearInterval(tmr);hide();await sl(200);let di={type:'single',rk:ef(f,G.hui),cards:[f]};execPlay(0,di);showAP(0,di.cards,false);playFX('dian');showBigText('点!','#ab47bc');await sl(300);resolve(true)};ab.classList.add('show');tmr=setInterval(()=>{cd--;let el=$('abCd2'),ring=$('abRing2');if(el)el.textContent=cd;if(ring)ring.style.strokeDashoffset=((10-cd)/10)*circ;if(cd<=0)decl()},1000)})}
+async function checkDianPhase(chaPlayer,chaRank){let dianCandidates=[];for(let i=1;i<=3;i++){let p=(chaPlayer+i)%4;if(G.dn[p]||p===chaPlayer)continue;if(G.hd[p].some(c=>c.r===chaRank))dianCandidates.push(p)}if(dianCandidates.length===0){G.lp=null;G.lpp=chaPlayer;G.ps=0;return false}showOv('<div style="text-align:center"><div class="radar"></div><div class="radar-text">检查点牌中...</div></div>');await sl(600);let didDian=false;for(let i=1;i<=3;i++){let p=(chaPlayer+i)%4;if(G.dn[p]||p===chaPlayer)continue;let hasMatch=G.hd[p].some(c=>c.r===chaRank);if(!hasMatch)continue;if(p===0){hideOv();let dd=await askHumanDian(chaRank);if(dd){didDian=true;break}}else{await sl(700+Math.random()*400);if(Math.random()>0.5){let f=G.hd[p].find(c=>c.r===chaRank);let dp={type:'single',rk:ef(f,G.hui),cards:[f]};execPlay(p,dp);showAP(p,dp.cards,false);playFX('dian');G.lp=null;G.lpp=p;G.ps=0;showBigText('点!','#ab47bc');await sl(400);didDian=true;break}}}hideOv();if(!didDian){G.lp=null;G.lpp=chaPlayer;G.ps=0}return didDian}
+function execPlay(pi,play){let ids=new Set(play.cards.map(c=>c.id));G.hd[pi]=G.hd[pi].filter(c=>!ids.has(c.id));G.lp=play;G.lpp=pi;G.ps=0;G._fromCha=false;G.played[pi].push(...play.cards)}
+function execPass(pi){G.ps++;let act=4-G.ord.length;if(G.ps>=act-1){G.lp=null;G.ps=0}}
+function pickDlg(title,desc,hand){return new Promise(resolve=>{let pk=null,s=srt(hand,G.hui);function show(){let h=`<div class="m"><h2>${title}</h2><p>${desc}</p><div class="cpick">`;s.forEach(c=>{let sel=pk&&pk.id===c.id?'sel':'';h+=`<div class="c ${red(c.suit)?'r':'b'}${isH(c,G.hui)?' hui':''}${c.r===17?' jr':''}${c.r===16?' jb':''} ${sel}" onclick="window._pk('${c.id}')">${c.r>=16?`<div class="corner"><span class="cv">${c.r===17?'大':'小'}</span><span class="cs">王</span></div><span class="center-suit">🃏</span>`:`<div class="corner"><span class="cv">${RN[c.r]}</span><span class="cs">${SYM[c.suit]||''}</span></div><span class="center-suit">${SYM[c.suit]||''}</span>`}</div>`});h+=`</div><button onclick="window._pok()" ${pk?'':'disabled'}>确认</button></div>`;showOv(h)}window._pk=id=>{pk=s.find(c=>c.id===id);show()};window._pok=()=>{hideOv();resolve(pk)};show()})}
+async function tributePhase(){G.ph='tribute';G.busy=true;let ft=G.ord[0]%2;let isDbl=G.ord.length>=2&&G.ord[0]%2===G.ord[1]%2;let emperor=G.ord[0];let losers=[],winners=[];if(isDbl){for(let p=0;p<4;p++){if(p%2!==ft)losers.push(p);else winners.push(p)}}else{let lastLoser=-1;for(let i=G.ord.length-1;i>=0;i--){if(G.ord[i]%2!==ft){lastLoser=G.ord[i];break}}if(lastLoser<0){G.busy=false;return}losers=[lastLoser];winners=[emperor]}let title=isDbl?'双抓上供':'单抓上供';let sub=isDbl?'两人都要上供':`${PN[losers[0]]}上供给皇上(${PN[emperor]})`;showOv(`<div class="m"><h2>${title}</h2><p>${sub}</p><button onclick="hideOv();window._cc&&window._cc()">开始上供</button></div>`);await new Promise(r=>{window._cc=()=>r()});let clog=[];for(let i=0;i<losers.length;i++){let lo=losers[i],wi=winners[i%winners.length],hand=G.hd[lo];if(!hand.length)continue;let tc=lo===0?await pickDlg('选择上供牌',`选一张牌上供给${PN[wi]}`,hand):((s=>s[s.length-1])(srt(hand,G.hui)));G.hd[lo]=G.hd[lo].filter(c=>c.id!==tc.id);G.hd[wi].push(tc);clog.push({from:lo,to:wi,card:tc,type:'tribute'});let tributeCard=cardHTML(tc,'sm');showOv(`<div class="m"><h2 style="color:#ff8a65">上供</h2><p><b>${PN[lo]}</b> 上供给 <b>${PN[wi]}</b></p><div class="played-show">${tributeCard}</div><p class="det">${RN[tc.r]}${SYM[tc.suit]||''}</p><button onclick="hideOv();window._cc&&window._cc()">继续</button></div>`);await new Promise(r=>{window._cc=()=>r()})}for(let i=0;i<winners.length;i++){let wi=winners[i],lo=losers[i%losers.length],hand=G.hd[wi];if(!hand.length)continue;let rc=wi===0?await pickDlg('选择回牌',`选一张牌回给${PN[lo]}`,hand):srt(hand,G.hui)[0];G.hd[wi]=G.hd[wi].filter(c=>c.id!==rc.id);G.hd[lo].push(rc);clog.push({from:wi,to:lo,card:rc,type:'return'});let returnCard=cardHTML(rc,'sm');showOv(`<div class="m"><h2 style="color:#81c784">回牌</h2><p><b>${PN[wi]}</b> 回给 <b>${PN[lo]}</b></p><div class="played-show">${returnCard}</div><p class="det">${RN[rc.r]}${SYM[rc.suit]||''}</p><button onclick="hideOv();window._cc&&window._cc()">继续</button></div>`);await new Promise(r=>{window._cc=()=>r()})}for(let p=0;p<4;p++)G.hd[p]=srt(G.hd[p],G.hui);let summary='';for(let e of clog){let col=red(e.card.suit)?'#ef9a9a':'#e0e0e0';let lbl=e.type==='tribute'?'上供':'回牌';let lblCol=e.type==='tribute'?'#ff8a65':'#81c784';summary+=`<div style="margin:4px 0;font-size:11px;color:rgba(255,255,255,.7)"><b>${PN[e.from]}</b> <span style="color:${lblCol}">[${lbl}]</span> → <b>${PN[e.to]}</b>: <span style="color:${col};font-weight:700">${RN[e.card.r]}${SYM[e.card.suit]||''}</span></div>`}showOv(`<div class="m"><h2>上供完成</h2>${summary}<div style="margin-top:10px"><button onclick="hideOv();window._cc&&window._cc()">继续游戏</button></div></div>`);await new Promise(r=>{window._cc=()=>r()});render();await sl(200);G.busy=false}
+function shouldEndRound(){if(G.ord.length<2)return false;if(G.ord.length>=4)return true;if(G.ord[0]%2===G.ord[1]%2)return true;return false}
+async function loop(){while(G.ph==='play'){render();if(G.dn[G.turn]){G.turn=(G.turn+1)%4;continue}if(G.turn===0)return;G.busy=true;render();await sl(600+Math.random()*400);let play=aiPick(G.turn);if(play){let isAICha=G.lp&&G.lp.type==='single'&&play.type==='pair'&&play.cards.every(c=>c.r===G.lp.cards[0].r);let isAIDian=G.lp&&G.lp.type==='pair'&&G._fromCha&&play.type==='single'&&play.cards[0].r===G.lp.cards[0].r;execPlay(G.turn,play);showAP(G.turn,play.cards,false);playFX(isAICha?'cha':(isAIDian?'dian':play.type));render();await sl(300);let chaDianed=false;if(isAICha){let cr=G.lp.cards[0].r;showBigText('岔!','#f06292');await sl(400);chaDianed=await checkDianPhase(G.turn,cr)}else if(isAIDian){let cr=G.lp.cards[0].r;showBigText('点!','#ab47bc');await sl(400);chaDianed=true}else{chaDianed=await checkChaDian(G.turn,play)}if(chaDianed){G.turn=G.lpp;G.busy=false;render();continue}}else{execPass(G.turn);showAP(G.turn,null,true)}G.busy=false;render();if(G.hd[G.turn].length===0&&!G.dn[G.turn]){G.dn[G.turn]=true;G.ord.push(G.turn);toast(`${PN[G.turn]}出完了!`);await sl(100);if(shouldEndRound()){await endRound();return}}if(!G.lp){G.turn=G.lpp;continue}G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){await endRound();return}}}
+async function afterPlayerPlay(){if(ONLINE.active)return;let play=G.lp,src=G.lpp;if(play){playFX(play.type);let chaDianed=await checkChaDian(src,play);if(chaDianed){G.turn=G.lpp;G.busy=false;render();if(G.turn===0)return;await loop();return}}if(G.hd[0].length===0&&!G.dn[0]){G.dn[0]=true;G.ord.push(0);toast('你出完了!');if(shouldEndRound()){await endRound();return}}if(!G.lp){G.turn=G.lpp;G.busy=false;render();if(G.turn===0)return;await loop();return}G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){await endRound();return}await loop()}
+function actPlay(){if(G.ph!=='play'||G.turn!==(ONLINE.active?ONLINE.mySeat:0)||G.busy)return;if(ONLINE.active){if(!G.sel.length){toast('请选择牌');return}G.busy=true;wsSend('play',{cards:G.sel});render();return}let sc=G.sel.map(id=>G.hd[0].find(c=>c.id===id)).filter(Boolean);if(!sc.length){toast('请选择牌');return}let play=detect(sc,G.hui);if(!play){toast('无效牌型');return}let free=!G.lp||G.lpp===0;let isCha=false,isDian=false;if(!free&&!beats(play,G.lp)){if(G.lp.type==='single'&&play.type==='pair'&&play.cards.every(c=>c.r===G.lp.cards[0].r)){isCha=true}else if(G.lp.type==='pair'&&G._fromCha&&play.type==='single'&&play.cards[0].r===G.lp.cards[0].r){isDian=true}else{toast('打不过');return}}G.sel=[];G.busy=true;execPlay(0,play);showAP(0,play.cards,false);if(isCha){playFX('cha');showBigText('岔!','#f06292');G._fromCha=true}else if(isDian){playFX('dian');showBigText('点!','#ab47bc');G.lp=null;G.lpp=0;G.ps=0}else{playFX(play.type)}render();if(isCha){(async()=>{let cr=play.cards[0].r;await checkDianPhase(0,cr);afterPlayerPlay()})()}else if(isDian){afterPlayerPlay()}else{afterPlayerPlay()}}
+function actPass(){if(G.ph!=='play'||G.turn!==(ONLINE.active?ONLINE.mySeat:0)||G.busy)return;if(!G.lp||G.lpp===(ONLINE.active?ONLINE.mySeat:0)){toast('必须出牌');return}G.sel=[];if(ONLINE.active){G.busy=true;wsSend('pass',{});render();return}G.busy=true;execPass(0);showAP(0,null,true);render();if(!G.lp){G.turn=G.lpp;G.busy=false;render();if(G.turn===0)return;loop();return}G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){endRound();return}loop()}
+function actHint(){if(G.ph!=='play'||G.turn!==0||G.busy)return;let free=!G.lp||G.lpp===0,plays=allPlays(G.hd[0],free?null:G.lp,G.hui);if(!plays.length){toast('没有能出的牌');return}G.hnt=(G.hnt+1)%(plays.length+1);if(G.hnt>=plays.length){G.sel=[];G.hnt=0}else G.sel=plays[G.hnt].cards.map(c=>c.id);render()}
+async function newGame(){if(ONLINE.ws){ONLINE.ws.close();ONLINE.ws=null}clearTimeout(ONLINE.reconnectTimer);ONLINE.active=false;ONLINE.mySeat=-1;ONLINE.nickNames=null;ONLINE.code=null;ONLINE.playerId=null;ONLINE.roomPlayers=null;$('connStatus').className='offline';$('connStatus').textContent='单机模式';G.lv=[3,3,3,3];G.stg=[true,false,true,false];G.rnd=0;G.noTr=false;G.win=-1;await newRound()}
+async function newRound(){G.rnd++;G.ph='deal';G.busy=true;G.lp=null;G.lpp=-1;G.ps=0;G.sel=[];G.played=[[],[],[],[]];showOv('<div class="m" style="text-align:center"><h2>第'+G.rnd+'局</h2><p style="color:#aaa">发牌中...</p><div class="radar"></div></div>');await sl(400);let h3=deal();if(G.rnd===1){let t=h3%2;G.stg=[t===0,t===1,t===0,t===1]}G.hui=G.lv[G.stg.indexOf(true)];hideOv();G._dealing=true;render();await sl(1500);G._dealing=false;if(G.rnd>1&&!G.noTr)await tributePhase();G.noTr=false;G.ph='play';G.turn=G.rnd===1?h3:(G.win>=0?G.win:0);G.busy=false;render();await loop()}
+async function endRound(){G.ph='end';G.busy=true;for(let p=0;p<4;p++)if(G.hd[p].length===0&&!G.ord.includes(p)){G.ord.push(p);G.dn[p]=true}let rem=[0,1,2,3].filter(p=>!G.ord.includes(p));rem.sort((a,b)=>G.hd[a].length-G.hd[b].length);G.ord.push(...rem);let first=G.ord[0],last=G.ord[3],oldS=[...G.stg];let res;if(G.ord.length>=2&&G.ord.length<4&&G.ord[0]%2===G.ord[1]%2){res=doDbl(G.ord[0]%2,oldS)}else if(first%2===last%2){res=doSglSame(first,oldS)}else{res=doSglDiff(first,last,first%2,oldS)}G.win=res.starter;await sl(300);showRes(res);G.busy=false}
+function doDbl(wt,os){let lt=1-wt,was=os[wt],dem=false;if(os[lt]){for(let p=0;p<4;p++)if(p%2===lt){if(G.lv[p]===11){G.lv[p]=3;dem=true}else if(G.lv[p]===14){G.lv[p]=11;dem=true}}if(dem)G.noTr=true}if(was)for(let p=0;p<4;p++)if(p%2===wt){let v=G.lv[p];if(v!==3&&v!==11&&v!==14){v+=2;if(v>14)v=15;G.lv[p]=v}}for(let p=0;p<4;p++)G.stg[p]=p%2===wt;return{wt,dbl:true,go:G.lv.some(l=>l>=15),dem,up:was,upgraded:was,sameTeam:false,starter:G.ord[0],msg:`${['我方','对方'][wt]}双抓!`}}
+function doSglSame(first,os){let wt=first%2;for(let p=0;p<4;p++)G.stg[p]=p%2===wt;G.noTr=true;return{wt,dbl:false,go:G.lv.some(l=>l>=15),dem:false,up:false,upgraded:false,sameTeam:true,starter:first,msg:`${['我方','对方'][wt]}获胜! (1/4同队)`}}
+function doSglDiff(first,last,wt,os){let was=os[wt];let upgraded=false;if(was){for(let p=0;p<4;p++)if(p%2===wt){let v=G.lv[p];if(v!==3&&v!==11&&v!==14){v+=1;if(v>14)v=15;G.lv[p]=v;upgraded=true}}}for(let p=0;p<4;p++)G.stg[p]=p%2===wt;G.noTr=false;return{wt,dbl:false,go:G.lv.some(l=>l>=15),dem:false,up:was,upgraded,sameTeam:false,starter:last,msg:`${['我方','对方'][wt]}获胜!`}}
+function showRes(r){let ls=`我方:${LN[G.lv[0]]||'过关'} | 对方:${LN[G.lv[1]]||'过关'}`;if(r.go){let w=G.lv[0]>=15?'我方':'对方';showOv(`<div class="m"><div class="big">🎉</div><h2>${w}最终胜利!</h2><p class="det">${ls}</p><p class="det">${r.msg}</p><button onclick="hideOv();newGame()">再来一局</button></div>`)}else{let d=r.dem?'<p style="color:#ff5722;font-weight:700">降级! 本局免上供</p>':'',u=r.sameTeam?'<p style="color:#81c784">保持台上, 免上供, 第一名先出</p>':(r.upgraded?(r.dbl?'<p>升2级</p>':'<p>升1级</p>'):'<p>上台(未升级)</p>');showOv(`<div class="m"><h2>本局结束</h2><p>${r.msg}</p>${u}<p class="det">${ls}</p>${d}<button onclick="hideOv();newRound()">下一局</button></div>`)}}
+let ONLINE={active:false,ws:null,mySeat:-1,nick:'',nickNames:null,playerId:null,code:null,roomPlayers:null,reconnectTimer:null,tributeLog:[]};
+function wsUrl(){let h=window.location.hostname;let p=window.location.protocol==='https:'?'wss:':'ws:';let pt=window.location.port;if(!pt||pt==='80'||pt==='443')return p+'//'+h+'/ws';return p+'//'+h+':'+pt+'/ws'}
+function connectWS(){return new Promise((resolve,reject)=>{let url=wsUrl();let w=new WebSocket(url);w.onopen=()=>{ONLINE.ws=w;setupWSHandlers();resolve()};w.onmessage=(e)=>{try{let m=JSON.parse(e.data);handleServerMsg(m)}catch(err){console.error('WS msg:',err)}};w.onclose=()=>{if(ONLINE.active&&ONLINE.code&&ONLINE.playerId){ONLINE.reconnectTimer=setTimeout(()=>{let w2=new WebSocket(wsUrl());w2.onopen=()=>{ONLINE.ws=w2;setupWSHandlers();w2.send(JSON.stringify({type:'reconnect',data:{code:ONLINE.code,playerId:ONLINE.playerId}}))};w2.onmessage=w.onmessage;w2.onclose=w.onclose;w2.onerror=()=>{}},3000)}};w.onerror=(e)=>reject(e);setTimeout(()=>reject(new Error('连接超时')),8000)})}
+function setupWSHandlers(){ONLINE.ws.onclose=()=>{if(ONLINE.active&&ONLINE.code&&ONLINE.playerId){ONLINE.reconnectTimer=setTimeout(()=>{try{let w=new WebSocket(wsUrl());w.onopen=()=>{ONLINE.ws=w;setupWSHandlers();wsSend('reconnect',{code:ONLINE.code,playerId:ONLINE.playerId})};w.onmessage=(e)=>{try{handleServerMsg(JSON.parse(e.data))}catch(er){}};w.onclose=()=>{};w.onerror=()=>{}}catch(e){}},3000)}}}
+function wsSend(type,data={}){if(ONLINE.ws&&ONLINE.ws.readyState===1)ONLINE.ws.send(JSON.stringify({type,data}))}
+function handleServerMsg(msg){
+  let d=msg.data;
+  switch(msg.type){
+    case 'room_created':ONLINE.code=d.code;ONLINE.playerId=d.playerId;sessionStorage.setItem('pid',d.playerId);break;
+    case 'room_update':ONLINE.roomPlayers=d.players;showWaitingRoom(d.players);break;
+    case 'room_joined':ONLINE.code=d.code;ONLINE.playerId=d.playerId;ONLINE.mySeat=d.seat;sessionStorage.setItem('pid',d.playerId);if(d.players)ONLINE.roomPlayers=d.players;break;
+    case 'game_start':ONLINE.mySeat=d.yourSeat;ONLINE.nickNames=d.seatNames;G.lv=[3,3,3,3];G.stg=[true,false,true,false];G.rnd=0;G.noTr=false;G.win=-1;break;
+    case 'state_sync':applyState(d);break;
+    case 'your_turn':G.busy=false;render();break;
+    case 'action_result':{let seat=d.seat;if(d.action==='pass'){G.ps++;showAP(seat,null,true)}else if(d.action==='play'||d.action==='cha'||d.action==='dian'){let fxType=d.isCha?'cha':(d.isDian?'dian':d.playType);playFX(fxType);showAP(seat,d.cards,false);let playObj={type:d.playType,rk:0,cards:d.cards};if(d.isCha)playObj.type='pair';if(d.isDian){G.lp=null;G.lpp=seat;G.ps=0}else{G.lp=playObj;G.lpp=seat;G.ps=0}if(!G.played[seat])G.played[seat]=[];G.played[seat].push(...d.cards)}render();break}
+    case 'player_done':toast((ONLINE.nickNames&&ONLINE.nickNames[d.seat]?ONLINE.nickNames[d.seat]:PN[d.seat])+'出完了!');break;
+    case 'interrupt_req':handleInterruptReq(d);break;
+    case 'tribute_req':handleTributeReq(d);break;
+    case 'tribute_result':{ONLINE.tributeLog.push(d);let lbl=d.direction==='tribute'?'上供':'回牌';let col=d.direction==='tribute'?'#ff8a65':'#81c784';let cn=SYM[d.card.suit]||'';toast((d.fromName||PN[d.from])+' '+lbl+' '+(d.toName||PN[d.to])+': '+RN[d.card.r]+cn,2000);break}
+    case 'tribute_done':{let summary='';for(let e of ONLINE.tributeLog){let col=red(e.card.suit)?'#ef9a9a':'#e0e0e0';let lbl=e.direction==='tribute'?'上供':'回牌';let lblCol=e.direction==='tribute'?'#ff8a65':'#81c784';summary+='<div style="margin:4px 0;font-size:11px;color:rgba(255,255,255,.7)"><b>'+(e.fromName||PN[e.from])+'</b> <span style="color:'+lblCol+'">['+lbl+']</span> → <b>'+(e.toName||PN[e.to])+'</b>: <span style="color:'+col+';font-weight:700">'+RN[e.card.r]+(SYM[e.card.suit]||'')+'</span></div>'}showOv('<div class="m"><h2>上供完成</h2>'+summary+'</div>');setTimeout(()=>{hideOv()},2500);ONLINE.tributeLog=[];break}
+    case 'round_end':G.ph='end';G.busy=false;G.lv=d.lv;G.stg=d.stg;G.ord=d.ord;showOnlineRes(d.result);break;
+    case 'game_over':G.ph='end';G.busy=false;showOnlineGameOver(d);break;
+    case 'error':toast(d.message);G.busy=false;break;
+    case 'player_left':toast((ONLINE.nickNames?ONLINE.nickNames[d.seat]:'玩家')+'断开连接');break;
+  }
+}
+function applyState(s){
+  if(G.ph==='end'&&(s.ph==='tribute'||s.ph==='play'))hideOv();
+  G.hd[0]=s.yourHand;
+  G.turn=s.turn;G.hui=s.hui;G.ph=s.ph;
+  G.lp=s.lastPlay;G.lpp=s.lastPlayPlayer;G.ps=s.passCount;
+  G.dn=s.dn;G.ord=s.ord;G.rnd=s.rnd;G.noTr=s.noTr;G.win=s.win;
+  if(s.playedCards)for(let i=0;i<4;i++)G.played[i]=s.playedCards[i]||[];
+  if(s.seatNames)ONLINE.nickNames=s.seatNames;
+  if(s.lv)G.lv=s.lv;if(s.stg)G.stg=s.stg;
+  for(let p=1;p<=3;p++){let init=13;let played=G.played[p]?G.played[p].length:0;let cnt=init-played;if(cnt<0)cnt=0;if(!G.hd[p])G.hd[p]=[];while(G.hd[p].length>cnt)G.hd[p].pop();while(G.hd[p].length<cnt)G.hd[p].push({suit:'_fill',r:0,id:'_fill_'+p+'_'+G.hd[p].length})}
+  G.sel=[];G.busy=false;render();
+}
+function showWaitingRoom(players){
+  if(!players)return;
+  let slots=players.map((p,i)=>{let cls=p.isAI?'filled':(i===0?'host':'filled');let icon=i===0?'👑 ':'';let name=p.nickname||p.nick||('座位'+i);return`<div class="player-slot ${cls}">${icon}${name}${p.isAI?' (AI)':''}</div>`}).join('');
+  let count=players.filter(p=>!p.isAI).length;
+  let total=players.length;
+  let code=ONLINE.code||'';
+  let btns='';
+  if(ONLINE.mySeat===0){
+    if(total>=2)btns+=`<button class="lobby-btn secondary" style="padding:8px;font-size:11px" onclick="wsSend('fill_ai')">空位补AI</button>`;
+    if(total>=4)btns+=`<button class="lobby-btn primary" onclick="wsSend('start_game')">开始游戏</button>`;
+    else if(total<2)btns+=`<p class="det">等待玩家加入 (${count}人)...</p>`;
+    else btns+=`<p class="det">${total}人就位, 可补AI或直接开始</p>`;
+  } else {
+    btns=`<p class="det">等待房主操作...</p>`;
+  }
+  let shareUrl=window.location.origin+window.location.pathname+'?mode=online&room='+code;
+  showOv(`<div class="m"><h2>房间 ${code}</h2><div class="room-id">${code}</div><p class="det">分享房间号给朋友</p><div style="margin:6px 0"><input class="lobby-input" id="shareLink" value="${shareUrl}" readonly onclick="this.select()" style="font-size:10px;color:#90caf9"></div><button class="lobby-btn secondary" style="padding:8px;font-size:11px" onclick="navigator.clipboard.writeText(document.getElementById('shareLink').value).then(()=>toast('已复制'))">复制邀请链接</button><div class="player-slots">${slots}</div>${btns}<button class="lobby-btn secondary" style="margin-top:12px" onclick="leaveRoom()">离开房间</button></div>`);
+}
+async function createRoom(nick){
+  try{await connectWS();ONLINE.nick=nick;ONLINE.mySeat=0;ONLINE.active=true;
+  wsSend('create_room',{nickname:nick});$('connStatus').className='online';$('connStatus').textContent='已连接'}
+  catch(e){showOv(`<div class="m"><h2>建房失败</h2><p>${e.message}</p><button onclick="hideOv();showLobby()">返回</button></div>`)}
+}
+async function joinRoom(code,nick){
+  try{await connectWS();ONLINE.nick=nick;ONLINE.active=true;
+  wsSend('join_room',{code:code.toUpperCase(),nickname:nick});$('connStatus').className='online';$('connStatus').textContent='已连接'}
+  catch(e){showOv(`<div class="m"><h2>加入失败</h2><p>${e.message}</p><button onclick="hideOv();showLobby()">返回</button></div>`)}
+}
+function leaveRoom(){
+  if(ONLINE.ws){ONLINE.ws.close();ONLINE.ws=null}
+  clearTimeout(ONLINE.reconnectTimer);
+  ONLINE.active=false;ONLINE.mySeat=-1;ONLINE.code=null;ONLINE.playerId=null;ONLINE.nickNames=null;ONLINE.roomPlayers=null;
+  $('connStatus').className='offline';$('connStatus').textContent='单机模式';
+  showLobby();
+}
+function handleInterruptReq(d){
+  if(d.interruptType==='cha'){
+    askHumanCha(d.srcPlayer,d.srcCard,d.yourFours).then(didCha=>{wsSend(didCha?'cha_yes':'cha_no',{})});
+  } else if(d.interruptType==='dian'){
+    askHumanDian().then(didDian=>{wsSend(didDian?'dian_yes':'dian_no',{})});
+  }
+}
+function handleTributeReq(d){
+  pickDlg(d.title||'选牌',d.desc||'选择一张牌',G.hd[0]).then(card=>{wsSend(d.direction==='tribute'?'tribute_pick':'return_pick',{card:card.id})});
+}
+function showOnlineRes(r){
+  let ls=`我方:${LN[G.lv[0]]||'过关'} | 对方:${LN[G.lv[1]]||'过关'}`;
+  let dem=r.dem?'<p style="color:#ff5722;font-weight:700">降级! 本局免上供</p>':'';
+  let upInfo=r.sameTeam?'<p style="color:#81c784">保持台上, 免上供</p>':(r.upgraded?(r.dbl?'<p>升2级</p>':'<p>升1级</p>'):'<p>上台(未升级)</p>');
+  showOv(`<div class="m"><h2>本局结束</h2><p>${r.msg}</p>${upInfo}<p class="det">${ls}</p>${dem}<p class="det" style="margin-top:8px">等待下一局...</p></div>`);
+}
+function showOnlineGameOver(d){
+  let w=d.winner==='A'?'我方':'对方';
+  let ls=`我方:${LN[G.lv[0]]||'过关'} | 对方:${LN[G.lv[1]]||'过关'}`;
+  showOv(`<div class="m"><div class="big">🎉</div><h2>${w}最终胜利!</h2><p class="det">${ls}</p><button onclick="hideOv();leaveRoom()">返回大厅</button></div>`);
+}
+function showLobby(){showOv(`<div class="m"><h2>144</h2><p>四人两两队 · 从3打到A</p><p style="font-size:10px;color:rgba(255,255,255,.4);text-align:left;line-height:1.8">· 对家同组, 在台上赢了才能升级<br>· <b style="color:#ffa726">三条=炸弹, 四条=更大炸弹</b><br>· 双王>四条, A44>一切<br>· <b style="color:#81c784">单龙: 3+张连续,不含会儿</b><br>· 会儿牌比2大比王小<br>· 出单4→对4「岔」, 岔后单4「点」<br>· <b style="color:#ffa726">从3必须双抓才能升5</b><br>· 10和K只能升一级, J被双抓→降到3</p><button class="lobby-btn primary" onclick="hideOv();newGame()">单机模式(AI)</button><button class="lobby-btn online" onclick="showOnlineSetup()">联机模式</button></div>`)}
+function showOnlineSetup(){let savedNick=localStorage.getItem('nick')||'';let connected=ONLINE.active?'<span style="color:#81c784">✓ 已连接</span>':'';showOv(`<div class="m"><h2>联机模式</h2><div style="margin:10px 0"><input class="lobby-input" id="cfgNick" placeholder="你的昵称" value="${savedNick}"></div>${connected}<button class="lobby-btn online" onclick="connectAndLobby()">进入大厅</button><button class="lobby-btn secondary" onclick="showLobby()">返回</button></div>`)}
+function connectAndLobby(){let nick=$('cfgNick').value.trim()||'玩家';localStorage.setItem('nick',nick);ONLINE.nick=nick;showMainLobby()}
+function showMainLobby(){showOv(`<div class="m"><h2>联机大厅</h2><p>昵称: <b>${ONLINE.nick}</b></p><button class="lobby-btn primary" onclick="hideOv();createRoom('${ONLINE.nick}')">创建房间</button><div style="margin:8px 0"><input class="lobby-input" id="joinId" placeholder="输入房间号加入"></div><button class="lobby-btn online" onclick="hideOv();joinRoom(document.getElementById('joinId').value,'${ONLINE.nick}')">加入房间</button><button class="lobby-btn secondary" onclick="showLobby()">返回</button></div>`)}
+(function(){
+  var tryFS = function(){
+    var el = document.documentElement;
+    var rfs = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+    if(rfs){
+      try{
+        var p = rfs.call(el);
+        if(p && p.then){ p.then(function(){
+          try{ screen.orientation.lock('landscape').catch(function(){}); }catch(e){}
+          setTimeout(window.reapply, 100);
+        }).catch(function(){}); }
+      }catch(e){}
+    }
+    document.removeEventListener('touchstart', tryFS);
+    document.removeEventListener('click', tryFS);
+    setTimeout(window.reapply, 100);
+    setTimeout(window.reapply, 500);
+    setTimeout(window.reapply, 1200);
+  };
+  document.addEventListener('touchstart', tryFS, {passive:true});
+  document.addEventListener('click', tryFS);
+  let params=new URLSearchParams(window.location.search);if(params.get('mode')==='online'){let savedNick=localStorage.getItem('nick')||'';if(!savedNick){showOnlineSetup();return}ONLINE.nick=savedNick;let room=params.get('room');if(room){joinRoom(room,savedNick)}else{showMainLobby()}}else{showLobby()}
+})()
+</script>
+</div>
+</body>
+</html>
