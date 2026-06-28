@@ -14,7 +14,7 @@ if [ -z "$SERVER_PASSWORD" ]; then
     exit 1
 fi
 SSH_PASS="$SERVER_PASSWORD"
-GAME_DIR="/var/www/game"
+GAME_DIR="/var/www/game/public"
 
 echo "=================================================="
 echo "  Deploying to Alibaba Cloud Lightweight Server"

@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 import os, paramiko
-
-base = os.path.dirname(os.path.abspath(__file__))
-HOST = open(os.path.join(base, '.server_ip')).read().strip()
-PASS = open(os.path.join(base, '.ssh_pass')).read().strip()
+from deploy_config import get_config
+cfg = get_config()
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(HOST, username='root', password=PASS, timeout=15, allow_agent=False, look_for_keys=False)
+ssh.connect(cfg['server_ip'], username=cfg['ssh_user'], password=cfg['ssh_pass'], timeout=15, allow_agent=False, look_for_keys=False)
 print("Connected")
 
-ssh.exec_command('mkdir -p /var/www/game')
+ssh.exec_command(f'mkdir -p {cfg["remote_public"]}')
 
 sftp = ssh.open_sftp()
-sftp.put(os.path.join(base, 'outputs', 'card-game.html'), '/var/www/game/index.html')
+sftp.put(cfg['local_html'], f"{cfg['remote_public']}/index.html")
 sftp.close()
 print("Uploaded")
 
 ssh.close()
-print(f"Visit: http://{HOST}")
+print(f"Visit: http://{cfg['server_ip']}")

@@ -19,13 +19,13 @@ if "%SERVER_PASSWORD%"=="" (
     exit /b 1
 )
 
-scp -o StrictHostKeyChecking=no "C:\Users\杨大宝\.qoderwork\workspace\mq2epl8bo56qv19k\outputs\card-game.html" root@%SERVER_IP%:/var/www/game/index.html
+scp -o StrictHostKeyChecking=no "C:\Users\杨大宝\.qoderwork\workspace\mq2epl8bo56qv19k\outputs\card-game.html" root@%SERVER_IP%:/var/www/game/public/index.html
 
 if errorlevel 1 (
     echo.
     echo [ERROR] 上传失败
     echo 请手动运行:
-    echo   scp outputs\card-game.html root@%SERVER_IP%:/var/www/game/index.html
+    echo   scp outputs\card-game.html root@%SERVER_IP%:/var/www/game/public/index.html
 ) else (
     echo.
     echo ==================================================

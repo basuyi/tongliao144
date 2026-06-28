@@ -1,12 +1,11 @@
 import paramiko, os
-BASE = os.path.dirname(os.path.abspath(__file__))
-_SERVER_IP = os.getenv('SERVER_IP', '')
-_SERVER_PASS = os.getenv('SERVER_PASSWORD', '')
+from deploy_config import get_config
+cfg = get_config()
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(_SERVER_IP, username='root', password=_SERVER_PASS, timeout=15, allow_agent=False, look_for_keys=False)
+ssh.connect(cfg['server_ip'], username=cfg['ssh_user'], password=cfg['ssh_pass'], timeout=15, allow_agent=False, look_for_keys=False)
 sftp = ssh.open_sftp()
-sftp.put(os.path.join(BASE, 'outputs', 'card-game.html'), '/var/www/game/public/index.html')
+sftp.put(cfg['local_html'], f"{cfg['remote_public']}/index.html")
 sftp.close()
 stdin, stdout, stderr = ssh.exec_command('nginx -s reload')
 print('reload:', stdout.read().decode(), stderr.read().decode())

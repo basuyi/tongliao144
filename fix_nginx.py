@@ -1,25 +1,23 @@
 #!/usr/bin/env python3
 import os, paramiko
-
-base = os.path.dirname(os.path.abspath(__file__))
-HOST = open(os.path.join(base, '.server_ip')).read().strip()
-PASS = open(os.path.join(base, '.ssh_pass')).read().strip()
+from deploy_config import get_config
+cfg = get_config()
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(HOST, username='root', password=PASS, timeout=10)
+ssh.connect(cfg['server_ip'], username=cfg['ssh_user'], password=cfg['ssh_pass'], timeout=10)
 
-print("Copying game to nginx default root...")
-stdin, stdout, stderr = ssh.exec_command('cp /var/www/game/index.html /usr/share/nginx/html/index.html')
+print("Reloading nginx...")
+stdin, stdout, stderr = ssh.exec_command('nginx -s reload')
 stdout.channel.recv_exit_status()
 err = stderr.read().decode().strip()
 if err:
-    print(f"Error: {err}")
+    print(f"Warn: {err}")
 else:
-    print("Copied!")
+    print("Nginx reloaded!")
 
-stdin, stdout, stderr = ssh.exec_command('wc -c /usr/share/nginx/html/index.html')
+stdin, stdout, stderr = ssh.exec_command(f'wc -c {cfg["remote_public"]}/index.html')
 print(f"File size: {stdout.read().decode().strip()}")
 
 ssh.close()
-print(f"Visit: http://{HOST}")
+print(f"Visit: http://{cfg['server_ip']}")

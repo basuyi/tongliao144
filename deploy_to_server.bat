@@ -15,7 +15,7 @@ if "%SERVER_PASSWORD%"=="" (
     exit /b 1
 )
 set SSH_PASS=%SERVER_PASSWORD%
-set GAME_DIR=/var/www/game
+set GAME_DIR=/var/www/game/public
 
 echo ==================================================
 echo   Deploying to Alibaba Cloud Lightweight Server

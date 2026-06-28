@@ -5,9 +5,14 @@ echo   部署美化版到轻量应用服务器
 echo ============================================
 echo.
 
-set SERVER_IP=39.96.47.193
+if "%SERVER_IP%"=="" (
+    echo [ERROR] 请先设置环境变量: set SERVER_IP=你的服务器IP
+    echo   以及: set SERVER_PASSWORD=你的服务器密码
+    pause
+    exit /b 1
+)
 set SSH_USER=root
-set REMOTE_DIR=/var/www/game
+set REMOTE_DIR=/var/www/game/public
 
 echo 服务器: %SERVER_IP%
 echo 文件: outputs\card-game.html
