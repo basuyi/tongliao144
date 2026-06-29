@@ -116,6 +116,12 @@ body{background:#05130a;color:#fff}
 .pav.op{color:#ef9a9a;border-color:rgba(244,67,54,.4);box-shadow:0 0 8px rgba(244,67,54,.15)}
 .pbar.active .pav{border-color:#ffd54f!important;box-shadow:0 0 16px rgba(255,215,0,.5),0 0 32px rgba(255,215,0,.2);animation:aglow 1.8s ease-in-out infinite}
 @keyframes aglow{0%,100%{box-shadow:0 0 10px rgba(255,215,0,.3),0 0 20px rgba(255,215,0,.1)}50%{box-shadow:0 0 20px rgba(255,215,0,.6),0 0 40px rgba(255,215,0,.2)}}
+.pav.play-flash{animation:playFlash .8s ease-out!important;z-index:10}
+.pav.play-flash.tm{box-shadow:0 0 24px rgba(33,150,243,.8),0 0 48px rgba(33,150,243,.4)!important;border-color:#64b5f6!important}
+.pav.play-flash.op{box-shadow:0 0 24px rgba(244,67,54,.8),0 0 48px rgba(244,67,54,.4)!important;border-color:#ef9a9a!important}
+@keyframes playFlash{0%{transform:scale(1.3);filter:brightness(1.6)}30%{transform:scale(1.15);filter:brightness(1.3)}100%{transform:scale(1);filter:brightness(1)}}
+#cc.play-glow-tm{filter:drop-shadow(0 0 12px rgba(33,150,243,.5))}
+#cc.play-glow-op{filter:drop-shadow(0 0 12px rgba(244,67,54,.5))}
 .pnm{font-size:11px;font-weight:700;min-width:42px;padding:1px 6px;border-radius:4px;background:rgba(0,0,0,.25)}
 .pnm.tm{color:#64b5f6;border-bottom:1.5px solid rgba(33,150,243,.3)}.pnm.op{color:#ef9a9a;border-bottom:1.5px solid rgba(244,67,54,.3)}
 .pcnt{font-size:9px;color:rgba(255,255,255,.5);background:rgba(0,0,0,.3);padding:1px 5px;border-radius:8px}
@@ -159,9 +165,9 @@ body{background:#05130a;color:#fff}
 #mi .me{color:#ffd54f;font-weight:800;font-size:11px}
 #ppc{display:flex;flex-wrap:wrap;justify-content:center;gap:0;padding:0 8px;max-height:18px;overflow:hidden;opacity:.5}
 #hw{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:3px 6px;mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}
-#hand{display:flex;justify-content:center;align-items:flex-end;min-height:68px}
-#hand .c:nth-child(n+14){margin-left:-18px}
-#hand .c:nth-child(n+18){margin-left:-22px}
+#hand{display:flex;justify-content:center;align-items:flex-end;min-height:112px}
+#hand .c:nth-child(n+14){margin-left:-26px}
+#hand .c:nth-child(n+18){margin-left:-30px}
 
 #bar{display:flex;gap:6px;justify-content:center;padding:4px 8px;padding-bottom:max(4px,env(safe-area-inset-bottom));flex-shrink:0;background:linear-gradient(180deg,rgba(0,0,0,.5),rgba(0,0,0,.7))}
 #bar button{padding:9px 0;border:none;border-radius:18px;font-size:13px;font-weight:800;cursor:pointer;flex:1;max-width:90px;transition:transform .12s ease,box-shadow .2s ease}
@@ -171,26 +177,26 @@ body{background:#05130a;color:#fff}
 .bs{background:rgba(255,255,255,.08);color:#bbb;border:1.5px solid rgba(255,255,255,.15)!important}
 .bh{background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);border:1.5px solid rgba(255,255,255,.08)!important;font-size:10px}
 
-.c{width:48px;height:68px;background:linear-gradient(180deg,#fff 0%,#fafafa 40%,#f0f0f0 100%);border-radius:6px;display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;font-weight:800;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;box-shadow:0 2px 6px rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.9);position:relative;flex-shrink:0;user-select:none;border:1.5px solid rgba(0,0,0,.1);margin-left:-14px}
+.c{width:76px;height:106px;background:linear-gradient(180deg,#fff 0%,#fafafa 40%,#f0f0f0 100%);border-radius:8px;display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;font-weight:800;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;box-shadow:0 2px 6px rgba(0,0,0,.35),0 1px 2px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.9);position:relative;flex-shrink:0;user-select:none;border:1.5px solid rgba(0,0,0,.1);margin-left:-20px}
 .c:first-child{margin-left:0}
-.c:hover{transform:translateY(-5px);box-shadow:0 6px 14px rgba(0,0,0,.3),0 2px 4px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.9)}
+.c:hover{transform:translateY(-6px);box-shadow:0 6px 14px rgba(0,0,0,.3),0 2px 4px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.9)}
 .c.r{color:#c62828}.c.b{color:#1a1a1a}
-.c.sel{transform:translateY(-14px) scale(1.04);border-color:#ffc107;box-shadow:0 8px 20px rgba(255,193,7,.4),0 2px 6px rgba(0,0,0,.2);z-index:2}
-.c .corner{display:flex;flex-direction:column;align-items:center;padding:3px 0 0 4px;line-height:1}
-.c .corner .cv{font-size:13px;font-weight:900;line-height:1.1}
-.c .corner .cs{font-size:11px;line-height:1}
-.c .center-suit{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22px;opacity:.8}
+.c.sel{transform:translateY(-20px) scale(1.04);border-color:#ffc107;box-shadow:0 8px 20px rgba(255,193,7,.4),0 2px 6px rgba(0,0,0,.2);z-index:2}
+.c .corner{display:flex;flex-direction:column;align-items:center;padding:5px 0 0 6px;line-height:1}
+.c .corner .cv{font-size:18px;font-weight:900;line-height:1.1}
+.c .corner .cs{font-size:14px;line-height:1}
+.c .center-suit{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:32px;opacity:.8}
 .c.hui{background:linear-gradient(180deg,#fffde7,#fff9c4 40%,#fff176);border-color:rgba(255,160,0,.4);animation:huiGlow 2s ease-in-out infinite}
 @keyframes huiGlow{0%,100%{box-shadow:0 2px 6px rgba(0,0,0,.3),0 0 8px rgba(255,160,0,.2)}50%{box-shadow:0 2px 6px rgba(0,0,0,.3),0 0 16px rgba(255,160,0,.4)}}
-.c.hui::after{content:"会";position:absolute;bottom:2px;right:3px;font-size:8px;color:#e65100;font-weight:900}
+.c.hui::after{content:"会";position:absolute;bottom:4px;right:5px;font-size:10px;color:#e65100;font-weight:900}
 .c.jr{background:linear-gradient(180deg,#fff,#ffcdd2 50%,#ef9a9a);color:#b71c1c;border-color:rgba(183,28,28,.25)}
-.c.jr .center-suit{font-size:18px}
+.c.jr .center-suit{font-size:26px}
 .c.jb{background:linear-gradient(180deg,#fff,#cfd8dc 50%,#b0bec5);color:#37474f;border-color:rgba(55,71,79,.25)}
-.c.jb .center-suit{font-size:18px}
-.c.sm{width:42px;height:60px;margin-left:-8px;cursor:default;pointer-events:none;border-radius:5px}
-.c.sm .corner .cv{font-size:11px}.c.sm .corner .cs{font-size:9px}.c.sm .center-suit{font-size:16px}
-.c.sm.hui::after{font-size:6px}
-.c.mn{width:22px;height:30px;margin-left:-4px;cursor:default;pointer-events:none;border-width:1px;border-radius:3px}
+.c.jb .center-suit{font-size:26px}
+.c.sm{width:64px;height:90px;margin-left:-12px;cursor:default;pointer-events:none;border-radius:7px}
+.c.sm .corner .cv{font-size:15px}.c.sm .corner .cs{font-size:12px}.c.sm .center-suit{font-size:24px}
+.c.sm.hui::after{font-size:8px}
+.c.mn{width:28px;height:40px;margin-left:-5px;cursor:default;pointer-events:none;border-width:1px;border-radius:4px}
 .c.mn:first-child{margin-left:0}
 .c.mn .corner{padding:1px 0 0 1px}
 .c.mn .corner .cv{font-size:7px}.c.mn .corner .cs{font-size:5px}.c.mn .center-suit{font-size:10px}
@@ -263,23 +269,86 @@ body{background:#05130a;color:#fff}
 @media(max-width:600px){
   .side{width:66px;padding:3px}
   .pav{width:34px;height:34px;font-size:13px}
-  .c{width:40px;height:58px;margin-left:-12px}
-  .c .corner .cv{font-size:11px}.c .corner .cs{font-size:9px}.c .center-suit{font-size:18px}
-  .c.sm{width:36px;height:52px;margin-left:-6px}
-  .c.sm .corner .cv{font-size:9px}.c.sm .center-suit{font-size:14px}
-  #hand{min-height:60px}
+  .c{width:60px;height:84px;margin-left:-16px}
+  .c .corner .cv{font-size:15px}.c .corner .cs{font-size:12px}.c .center-suit{font-size:26px}
+  .c.sm{width:52px;height:72px;margin-left:-10px}
+  .c.sm .corner .cv{font-size:13px}.c.sm .center-suit{font-size:20px}
+  .c.mn{width:22px;height:32px;margin-left:-4px}
+  .c.mn .corner .cv{font-size:6px}.c.mn .center-suit{font-size:10px}
+  #hand{min-height:88px}
   #ct{font-size:14px}
   #turnInd{font-size:13px}
   .ab-btn{font-size:15px;padding:10px 24px}
 }
+@media(max-height:500px){
+  .side{width:52px;padding:2px;gap:2px}
+  .pav{width:30px;height:30px;font-size:12px}
+  .pnm{font-size:9px;min-width:32px;padding:1px 4px}
+  .pcnt{font-size:8px;padding:1px 4px}
+  .side .pbk{display:none}
+  .side .psh{max-height:90px}
+  .c{width:56px;height:78px;margin-left:-14px}
+  .c .corner .cv{font-size:14px}.c .corner .cs{font-size:11px}.c .center-suit{font-size:24px}
+  .c.sm{width:48px;height:68px;margin-left:-9px}
+  .c.sm .corner .cv{font-size:12px}.c.sm .center-suit{font-size:19px}
+  .c.mn{width:20px;height:28px;margin-left:-3px}
+  .c.mn .corner .cv{font-size:6px}.c.mn .center-suit{font-size:9px}
+  #hdr{height:26px;padding:2px 6px;gap:6px}
+  #hs,#hh{padding:1px 6px}.hb{padding:1px 6px}.lv{padding:1px 5px;font-size:7px}
+  #hs .big{font-size:10px}#hh .big{font-size:11px}
+  .pbar{padding:2px 6px;gap:5px}
+  #hand{min-height:82px}
+  #hw{padding:2px 4px}
+  #bar{padding:3px 6px;gap:4px}
+  #bar button{padding:7px 0;font-size:12px;border-radius:14px;max-width:80px}
+  #ct{font-size:13px}
+  #turnInd{font-size:12px;min-height:16px}
+  #cw{font-size:11px;min-height:14px}
+  #ca{padding:6px}
+  .ab-btn{font-size:14px;padding:8px 20px}
+  .ab-timer svg{width:38px;height:38px}
+}
+@media(max-height:420px){
+  .side{width:42px;padding:2px 1px;gap:1px}
+  .pav{width:26px;height:26px;font-size:10px;border-width:1.5px}
+  .pnm{font-size:8px;min-width:26px;padding:0 3px;line-height:1.2}
+  .pcnt{font-size:7px;padding:0 3px}
+  .side .psh{max-height:70px}
+  .c{width:48px;height:66px;margin-left:-12px;border-radius:5px}
+  .c .corner .cv{font-size:12px}.c .corner .cs{font-size:10px}.c .center-suit{font-size:20px}
+  .c.sm{width:40px;height:56px;margin-left:-8px}
+  .c.sm .corner .cv{font-size:10px}.c.sm .center-suit{font-size:16px}
+  .c.mn{width:16px;height:22px;margin-left:-3px}
+  .c.mn .corner .cv{font-size:5px}.c.mn .center-suit{font-size:7px}
+  .c.sel{transform:translateY(-14px) scale(1.03)}
+  #hdr{height:22px;padding:1px 5px;gap:4px}
+  .hb{padding:1px 5px;font-size:8px}
+  #hs .big{font-size:9px}#hh .big{font-size:10px}
+  .lv{font-size:7px;padding:0 4px}
+  .pbar{padding:1px 4px;gap:4px}
+  #hand{min-height:70px}
+  #hw{padding:1px 3px}
+  #bar{padding:2px 4px;gap:3px}
+  #bar button{padding:6px 0;font-size:11px;max-width:72px}
+  #ct{font-size:11px}
+  #turnInd{font-size:11px;min-height:14px}
+  #cw{font-size:10px;min-height:12px}
+  #ca{padding:4px}
+  #toast{font-size:12px;padding:8px 16px;border-radius:10px}
+  .m{padding:12px}.m h2{font-size:16px}.m p{font-size:12px}
+  .ab-btn{font-size:13px;padding:7px 16px}
+  .ab-timer svg{width:34px;height:34px}
+}
 @media(min-width:800px){
   .side{width:104px}
   .pav{width:46px;height:46px;font-size:18px}
-  .c{width:56px;height:78px;margin-left:-16px}
-  .c .corner .cv{font-size:15px}.c .center-suit{font-size:26px}
-  .c.sm{width:50px;height:70px;margin-left:-10px}
-  .c.sm .corner .cv{font-size:13px}.c.sm .center-suit{font-size:20px}
-  #hand{min-height:80px}
+  .c{width:86px;height:120px;margin-left:-22px}
+  .c .corner .cv{font-size:20px}.c .center-suit{font-size:36px}
+  .c.sm{width:72px;height:100px;margin-left:-14px}
+  .c.sm .corner .cv{font-size:17px}.c.sm .center-suit{font-size:28px}
+  .c.mn{width:32px;height:46px;margin-left:-6px}
+  .c.mn .corner .cv{font-size:9px}.c.mn .center-suit{font-size:14px}
+  #hand{min-height:128px}
   #ct{font-size:20px}
   #turnInd{font-size:18px}
 }
@@ -287,6 +356,9 @@ body{background:#05130a;color:#fff}
 #connStatus{position:fixed;top:34px;right:5px;font-size:8px;padding:2px 7px;border-radius:6px;z-index:50;pointer-events:none}
 #connStatus.online{background:rgba(76,175,80,.2);color:#81c784;border:1px solid rgba(76,175,80,.3)}
 #connStatus.offline{background:rgba(158,158,158,.12);color:#999;border:1px solid rgba(158,158,158,.15)}
+#musicBtn{position:fixed;top:3px;right:5px;z-index:60;width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.4);color:#aaa;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:all .3s ease}
+#musicBtn.on{color:#81c784;border-color:rgba(129,199,132,.4);background:rgba(76,175,80,.15)}
+#musicBtn:active{transform:scale(.9)}
 
 .lobby-btn{display:block;width:100%;padding:14px;margin:6px 0;border:none;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;transition:transform .12s ease}
 .lobby-btn:active{transform:scale(.95)}
@@ -306,6 +378,7 @@ body{background:#05130a;color:#fff}
 </head>
 <body>
 <div id="wrap">
+<button id="musicBtn" onclick="toggleMusic()" title="背景音乐">♪</button>
 <div id="connStatus" class="offline">单机模式</div>
 <div id="hdr">
   <div class="hb" id="hs"><span>台上 </span><span class="big" id="stTxt">--</span></div>
@@ -413,7 +486,7 @@ const BM=['b3','b4','dj','a44'],BO={b3:1,b4:2,dj:3,a44:4};
 function beats(np,lp){if(!lp)return true;let ni=BM.includes(np.type)?BO[np.type]:0,li=BM.includes(lp.type)?BO[lp.type]:0;if(ni&&li){if(ni!==li)return ni>li;return np.rk>lp.rk}if(ni)return true;if(li)return false;if(np.type!==lp.type)return false;if(np.cards.length!==lp.cards.length)return false;return np.rk>lp.rk}
 function allPlays(hand,lp,h){let ps=[],s=srt(hand,h),rc={};s.forEach(c=>{if(!rc[c.r])rc[c.r]=[];rc[c.r].push(c)});if(!lp){let seen=new Set();for(let c of s){if(!seen.has(c.r)){ps.push({type:'single',rk:ef(c,h),cards:[c]});seen.add(c.r)}}for(let[r,cs]of Object.entries(rc)){if(cs.length>=2)ps.push({type:'pair',rk:ef(cs[0],h),cards:cs.slice(0,2)});if(cs.length>=3)ps.push({type:'b3',rk:ef(cs[0],h),cards:cs.slice(0,3)});if(cs.length>=4)ps.push({type:'b4',rk:ef(cs[0],h),cards:cs.slice(0,4)});}for(let[r,cs]of Object.entries(rc))if(cs.length>=3){let pe=Object.entries(rc).find(([r2,c2])=>+r2!==+r&&c2.length>=2);if(pe)ps.push({type:'t32',rk:ef(cs[0],h),cards:[...cs.slice(0,3),...pe[1].slice(0,2)]})}{let uR=Object.keys(rc).map(Number).filter(r=>r!==h&&r>=3&&r<=15).sort((a,b)=>a-b);for(let si=0;si<uR.length;si++){let straight=[],end=si;while(end<uR.length&&uR[end]===uR[si]+(end-si)&&uR[end]<=14){straight.push(rc[uR[end]][0]);end++;if(straight.length>=3)ps.push({type:'straight',rk:uR[end-1],cards:straight.slice()})}}}let ac=s.filter(c=>c.r===14),fc=s.filter(c=>c.r===4);if(ac.length&&fc.length>=2){let a=[ac[0],fc[0],fc[1]];ps.push({type:'a44',rk:a.every(c=>red(c.suit))?300:299,cards:a})}let bj=s.find(c=>c.r===16),rj=s.find(c=>c.r===17);if(bj&&rj)ps.push({type:'dj',rk:250,cards:[bj,rj]});return ps;}let lt=lp.type,lr=lp.rk,lB=BM.includes(lt);if(!lB){if(lt==='single')for(let c of s)if(ef(c,h)>lr)ps.push({type:'single',rk:ef(c,h),cards:[c]});if(lt==='pair')for(let[r,cs]of Object.entries(rc))if(cs.length>=2&&ef(cs[0],h)>lr)ps.push({type:'pair',rk:ef(cs[0],h),cards:cs.slice(0,2)});if(lt==='t32')for(let[r,cs]of Object.entries(rc))if(cs.length>=3&&ef(cs[0],h)>lr){let pe=Object.entries(rc).find(([r2,c2])=>+r2!==+r&&c2.length>=2);if(pe)ps.push({type:'t32',rk:ef(cs[0],h),cards:[...cs.slice(0,3),...pe[1].slice(0,2)]})}if(lt==='straight'){let ln=lp.cards.length;let uR=Object.keys(rc).map(Number).filter(r=>r!==h&&r>=3&&r<=14).sort((a,b)=>a-b);for(let si=0;si<=uR.length-ln;si++){let ok=true;for(let j=0;j<ln;j++){if(uR[si+j]!==uR[si]+j){ok=false;break}}if(ok&&uR[si+ln-1]>lr){let st=[];for(let j=0;j<ln;j++)st.push(rc[uR[si+j]][0]);ps.push({type:'straight',rk:uR[si+ln-1],cards:st})}}}}for(let[r,cs]of Object.entries(rc)){if(cs.length>=3&&(!lB||BO.b3>BO[lt]||(BO.b3===BO[lt]&&ef(cs[0],h)>lr)))ps.push({type:'b3',rk:ef(cs[0],h),cards:cs.slice(0,3)});if(cs.length>=4&&(!lB||BO.b4>BO[lt]||(BO.b4===BO[lt]&&ef(cs[0],h)>lr)))ps.push({type:'b4',rk:ef(cs[0],h),cards:cs.slice(0,4)});}if(!lB||BO.dj>BO[lt]){let bj=s.find(c=>c.r===16),rj=s.find(c=>c.r===17);if(bj&&rj)ps.push({type:'dj',rk:250,cards:[bj,rj]})}if(!lB||BO.a44>BO[lt]){let ac=s.filter(c=>c.r===14),fc=s.filter(c=>c.r===4);if(ac.length&&fc.length>=2){let a=[ac[0],fc[0],fc[1]];ps.push({type:'a44',rk:a.every(c=>red(c.suit))?300:299,cards:a})}}if(lt==='a44'){let ac=s.filter(c=>c.r===14),fc=s.filter(c=>c.r===4);if(ac.length&&fc.length>=2){let a=[ac[0],fc[0],fc[1]],ar=a.every(c=>red(c.suit)),rk=ar?300:299;if(rk>lr)ps.push({type:'a44',rk,cards:a})}}if(lt==='single'&&lp.cards[0].r===4){let fours=rc[4]||[];if(fours.length>=2)ps.push({type:'cha',rk:999,cards:fours.slice(0,2)})}if(lt==='pair'&&lp.cards[0].r===4){let fours=rc[4]||[];if(fours.length>=1)ps.push({type:'dian',rk:999,cards:[fours[0]]})}return ps;}
 function aiPick(pi){let hand=G.hd[pi];if(!hand.length)return null;let free=!G.lp||G.lpp===pi,plays=allPlays(hand,free?null:G.lp,G.hui);if(!plays.length)return null;let nb=plays.filter(p=>!BM.includes(p.type)),bm=plays.filter(p=>BM.includes(p.type));if(free){if(nb.length){nb.sort((a,b)=>a.rk-b.rk);return nb[0]}bm.sort((a,b)=>a.rk-b.rk);return bm[0]}if(G.lpp%2===pi%2)return null;if(nb.length){nb.sort((a,b)=>a.rk-b.rk);return nb[0]}if(hand.length<=4){bm.sort((a,b)=>a.rk-b.rk);return bm[0]}return null}
-function playFX(type){let ca=$('ca');if(!ca)return;if(type==='b3'||type==='b4'||type==='dj'||type==='a44'){ca.classList.add('bomb-shake');let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className=type==='a44'?'cha-flash':'bomb-flash';ca.appendChild(ov);setTimeout(()=>{ca.classList.remove('bomb-shake');ov.remove()},700);return}if(type==='cha'){let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className='cha-flash';ca.appendChild(ov);setTimeout(()=>ov.remove(),600);return}if(type==='dian'){let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className='dian-flash';ca.appendChild(ov);setTimeout(()=>ov.remove(),600);return}let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className='type-flash';ca.appendChild(ov);setTimeout(()=>ov.remove(),550)}
+function playFX(type){playCardSFX(type);let ca=$('ca');if(!ca)return;if(type==='b3'||type==='b4'||type==='dj'||type==='a44'){ca.classList.add('bomb-shake');let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className=type==='a44'?'cha-flash':'bomb-flash';ca.appendChild(ov);setTimeout(()=>{ca.classList.remove('bomb-shake');ov.remove()},700);return}if(type==='cha'){let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className='cha-flash';ca.appendChild(ov);setTimeout(()=>ov.remove(),600);return}if(type==='dian'){let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className='dian-flash';ca.appendChild(ov);setTimeout(()=>ov.remove(),600);return}let ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;border-radius:12px;pointer-events:none;z-index:5';ov.className='type-flash';ca.appendChild(ov);setTimeout(()=>ov.remove(),550)}
 function showBigText(text,color){let bt=$('bigText');if(!bt)return;bt.querySelector('.bt-inner').textContent=text;bt.querySelector('.bt-inner').style.color=color||'#fff';bt.classList.remove('show');void bt.offsetWidth;bt.classList.add('show');setTimeout(()=>bt.classList.remove('show'),1400)}
 function mkC(c,cls,sel){let d=document.createElement('div'),col=red(c.suit)?'r':'b',ex='';if(isH(c,G.hui))ex=' hui';if(c.r===17)ex=' jr';if(c.r===16)ex=' jb';d.className=`c ${col}${ex} ${cls||''} ${sel?'sel':''}`;if(c.r>=16){let label=c.r===17?'大':'小';d.innerHTML=`<div class="corner"><span class="cv">${label}</span><span class="cs">王</span></div><span class="center-suit">🃏</span>`}else{let val=RN[c.r];let sym=SYM[c.suit]||'';d.innerHTML=`<div class="corner"><span class="cv">${val}</span><span class="cs">${sym}</span></div><span class="center-suit">${sym}</span>`}return d}
 function cardHTML(c,cls){let col=red(c.suit)?'r':'b',ex='';if(c.r===G.hui&&c.r>=3&&c.r<=14)ex=' hui';if(c.r===17)ex=' jr';if(c.r===16)ex=' jb';let extra=cls||'';if(c.r>=16){let label=c.r===17?'大':'小';return `<div class="c ${col}${ex} ${extra}" style="cursor:default"><div class="corner"><span class="cv">${label}</span><span class="cs">王</span></div><span class="center-suit">🃏</span></div>`}let val=RN[c.r],sym=SYM[c.suit]||'';return `<div class="c ${col}${ex} ${extra}" style="cursor:default"><div class="corner"><span class="cv">${val}</span><span class="cs">${sym}</span></div><span class="center-suit">${sym}</span></div>`}
@@ -445,25 +518,27 @@ function render(){
   if(G.lp){
     let whoName=(ONLINE.active&&ONLINE.nickNames&&ONLINE.nickNames[G.lpp])?ONLINE.nickNames[G.lpp]:PN[G.lpp];
     let tc=G.lpp%2===0?'#64b5f6':'#ef9a9a';
-    let cw=$('cw');cw.innerHTML='<span style="color:'+tc+';font-weight:900;font-size:14px">'+whoName+'</span> 出牌';
-    G.lp.cards.forEach(c=>$('cc').appendChild(mkC(c,'sm')));
+    let gc=G.lpp%2===0?'play-glow-tm':'play-glow-op';$('cc').className=gc;
+    let cw=$('cw');cw.innerHTML='<span style="color:'+tc+';font-weight:900;font-size:17px;text-shadow:0 0 8px '+tc+'">'+whoName+'</span> 出牌';
+    G.lp.cards.forEach(c=>$('cc').appendChild(mkC(c,'')));
     let tn=TCN[G.lp.type]||'';if(G.lp.type==='straight')tn='🐉 单龙('+G.lp.cards.length+'张)';if(G.lp.type==='b3')tn='💣 炸弹(三条)';if(G.lp.type==='b4')tn='💣💣 大炸弹';if(G.lp.type==='dj')tn='👑 双王';if(G.lp.type==='a44')tn='💥 A44';if(G.lp.type==='pair')tn='对子';if(G.lp.type==='single')tn='单张';if(G.lp.type==='t32')tn='三带二';$('ct').textContent=tn;
-  } else { let cw=$('cw');cw.innerHTML='<span style="color:rgba(255,255,255,.3)">自由出牌</span>'; }
+  } else { let cw=$('cw');cw.innerHTML='<span style="color:rgba(255,255,255,.3)">自由出牌</span>';$('cc').className=''; }
   // 回合指示
   let ti=$('turnInd');
-  if(isPlay&&!G.busy){let tn=(ONLINE.active&&ONLINE.nickNames&&ONLINE.nickNames[G.turn])?ONLINE.nickNames[G.turn]:PN[G.turn];if(G.turn===0){ti.textContent='👉 轮到你出牌';ti.className='glow'}else{ti.textContent=tn+' 思考中...';ti.className=''}}else{ti.textContent='';ti.className=''}
+  if(isPlay&&!G.busy&&!G.dn[G.turn]){let tn=(ONLINE.active&&ONLINE.nickNames&&ONLINE.nickNames[G.turn])?ONLINE.nickNames[G.turn]:PN[G.turn];if(G.turn===0){ti.textContent='👉 轮到你出牌';ti.className='glow'}else{ti.textContent=tn+' 思考中...';ti.className=''}}else{ti.textContent='';ti.className=''}
   // 手牌
   let hd=G.hd[0];let myLabel=ONLINE.active&&ONLINE.nick?ONLINE.nick:'我';$('ml').textContent=`${myLabel}(${hd.length})`;
   let hw=$('hand');hw.innerHTML='';let sorted=srt(hd,G.hui);G.hd[0]=sorted;
   sorted.forEach((c,i)=>{let el=mkC(c,'',G.sel.includes(c.id));el.onclick=()=>togSel(c.id);if(G._dealing){el.classList.add('dealing');el.style.animationDelay=(i*40)+'ms'}hw.appendChild(el)});
   let ppc=$('ppc');if(ppc){ppc.innerHTML='';let myRecent=G.played[0].slice(-12);myRecent.forEach(c=>ppc.appendChild(mkC(c,'mn')))}
-  let st2=$('ms');let humanAct=isPlay&&G.turn===0&&!G.busy;
+  let st2=$('ms');let humanAct=isPlay&&G.turn===0&&!G.busy&&!G.dn[0];
   $('bot').classList.toggle('active',humanAct);
   if(humanAct){st2.textContent='👉 轮到你';st2.style.color='#ffd54f'}else{st2.textContent=G.dn[0]?'✓出完':'等待';st2.style.color='rgba(255,255,255,.3)'}
   $('bP').disabled=!humanAct;$('bPs').disabled=!humanAct||(!G.lp||G.lpp===0);
 }
 function togSel(id){if(G.ph!=='play'||G.turn!==0||G.busy)return;let i=G.sel.indexOf(id);if(i>=0)G.sel.splice(i,1);else G.sel.push(id);render()}
-function showAP(pi,cards,pass){let el=pi===0?$('mp'):$('a'+pi);el.innerHTML='';if(pass){el.innerHTML='<span class="ptxt">不出</span>';return}if(cards){let dirs=[{x:0,y:20},{x:-20,y:0},{x:0,y:-20},{x:20,y:0}];cards.forEach((c,i)=>{let d=mkC(c,'sm');el.appendChild(d);let dx=dirs[pi].x,dy=dirs[pi].y;d.animate([{opacity:0,transform:`translate(${dx}px,${dy}px) scale(0.85)`},{opacity:1,transform:'translate(0,0) scale(1)'}],{duration:350,delay:i*70,fill:'forwards',easing:'cubic-bezier(.22,.61,.36,1)'})})}}
+function showAP(pi,cards,pass){let el=pi===0?$('mp'):$('a'+pi);el.innerHTML='';if(pass){playCardSFX('pass');el.innerHTML='<span class="ptxt">不出</span>';return}if(cards){let dirs=[{x:0,y:20},{x:-20,y:0},{x:0,y:-20},{x:20,y:0}];cards.forEach((c,i)=>{let d=mkC(c,'sm');el.appendChild(d);let dx=dirs[pi].x,dy=dirs[pi].y;d.animate([{opacity:0,transform:`translate(${dx}px,${dy}px) scale(0.85)`},{opacity:1,transform:'translate(0,0) scale(1)'}],{duration:350,delay:i*70,fill:'forwards',easing:'cubic-bezier(.22,.61,.36,1)'})})}}
+function flashAvatar(pi){let av=$('av'+pi);if(!av)return;let tc=pi%2===0?'tm':'op';av.classList.remove('play-flash');void av.offsetWidth;av.classList.add('play-flash',tc);setTimeout(()=>av.classList.remove('play-flash'),900)}
 let _tt;function toast(msg,dur=1400,cls=''){let t=$('toast');if(!t){t=document.createElement('div');t.id='toast';let w=$('wrap');(w||document.body).appendChild(t)}t.textContent=msg;t.className='show'+(cls?' '+cls:'');clearTimeout(_tt);_tt=setTimeout(()=>t.className='',dur)}
 function showOv(h){let ov=$('ov');let w=$('wrap');if(!ov){ov=document.createElement('div');ov.id='ov';if(w)w.appendChild(ov);else document.body.appendChild(ov)}if(ov.parentNode!==w&&w){w.appendChild(ov)}ov.style.cssText='position:absolute;inset:0;background:rgba(0,0,0,.8);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px)';ov.innerHTML=h;ov.classList.remove('h')}
 function hideOv(){let ov=$('ov');if(ov){ov.classList.add('h');ov.style.display='none'}}
@@ -472,14 +547,15 @@ function askHumanCha(srcPlayer,srcCard,fours){return new Promise(resolve=>{let c
 function askHumanDian(chaRank){return new Promise(resolve=>{let f=G.hd[0].find(c=>c.r===chaRank);if(!f){resolve(false);return}let cd=10,tmr=null,done=false;let ab=$('actionBar'),inner=$('abInner');let circ=2*Math.PI*19;inner.innerHTML='<div style="display:flex;align-items:center;gap:4px;margin-right:8px">'+cardHTML(f,'mn')+'</div><button class="ab-btn dian" id="abDian">点!</button><button class="ab-btn skip" id="abSkip2">跳过</button><div class="ab-timer"><svg width="44" height="44" viewBox="0 0 44 44"><circle class="ab-timer-bg" cx="22" cy="22" r="19"/><circle class="ab-timer-fg" id="abRing2" cx="22" cy="22" r="19" stroke-dasharray="'+circ+'" stroke-dashoffset="0"/></svg><div class="ab-timer-txt" id="abCd2">'+cd+'</div></div>';function hide(){ab.classList.remove('show')}function decl(){if(done)return;done=true;clearInterval(tmr);hide();resolve(false)}$('abSkip2').onclick=decl;$('abDian').onclick=async()=>{if(done)return;done=true;clearInterval(tmr);hide();await sl(200);let di={type:'single',rk:ef(f,G.hui),cards:[f]};execPlay(0,di);showAP(0,di.cards,false);playFX('dian');showBigText('点!','#ab47bc');await sl(300);resolve(true)};ab.classList.add('show');tmr=setInterval(()=>{cd--;let el=$('abCd2'),ring=$('abRing2');if(el)el.textContent=cd;if(ring)ring.style.strokeDashoffset=((10-cd)/10)*circ;if(cd<=0)decl()},1000)})}
 async function checkDianPhase(chaPlayer,chaRank){let dianCandidates=[];for(let i=1;i<=3;i++){let p=(chaPlayer+i)%4;if(G.dn[p]||p===chaPlayer)continue;if(G.hd[p].some(c=>c.r===chaRank))dianCandidates.push(p)}if(dianCandidates.length===0){G.lp=null;G.lpp=chaPlayer;G.ps=0;return false}showOv('<div style="text-align:center"><div class="radar"></div><div class="radar-text">检查点牌中...</div></div>');await sl(600);let didDian=false;for(let i=1;i<=3;i++){let p=(chaPlayer+i)%4;if(G.dn[p]||p===chaPlayer)continue;let hasMatch=G.hd[p].some(c=>c.r===chaRank);if(!hasMatch)continue;if(p===0){hideOv();let dd=await askHumanDian(chaRank);if(dd){didDian=true;break}}else{await sl(700+Math.random()*400);if(Math.random()>0.5){let f=G.hd[p].find(c=>c.r===chaRank);let dp={type:'single',rk:ef(f,G.hui),cards:[f]};execPlay(p,dp);showAP(p,dp.cards,false);playFX('dian');G.lp=null;G.lpp=p;G.ps=0;showBigText('点!','#ab47bc');await sl(400);didDian=true;break}}}hideOv();if(!didDian){G.lp=null;G.lpp=chaPlayer;G.ps=0}return didDian}
 function execPlay(pi,play){let ids=new Set(play.cards.map(c=>c.id));G.hd[pi]=G.hd[pi].filter(c=>!ids.has(c.id));G.lp=play;G.lpp=pi;G.ps=0;G._fromCha=false;G.played[pi].push(...play.cards)}
-function execPass(pi){G.ps++;let act=4-G.ord.length;if(G.ps>=act-1){G.lp=null;G.ps=0}}
+function execPass(pi){G.ps++;let act=4-G.ord.length;if(G.ps>=act-1){G._jf=(G.hd[G.lpp]&&G.hd[G.lpp].length===0);G.lp=null;G.ps=0}}
+function jiefeng(){let tm=G.lpp%2;for(let i=0;i<4;i++){if(i!==G.lpp&&i%2===tm&&!G.dn[i])return i}let next=(G.lpp+1)%4,s=0;while(s<4){if(!G.dn[next])return next;next=(next+1)%4;s++}return(G.lpp+1)%4}
 function pickDlg(title,desc,hand){return new Promise(resolve=>{let pk=null,s=srt(hand,G.hui);function show(){let h=`<div class="m"><h2>${title}</h2><p>${desc}</p><div class="cpick">`;s.forEach(c=>{let sel=pk&&pk.id===c.id?'sel':'';h+=`<div class="c ${red(c.suit)?'r':'b'}${isH(c,G.hui)?' hui':''}${c.r===17?' jr':''}${c.r===16?' jb':''} ${sel}" onclick="window._pk('${c.id}')">${c.r>=16?`<div class="corner"><span class="cv">${c.r===17?'大':'小'}</span><span class="cs">王</span></div><span class="center-suit">🃏</span>`:`<div class="corner"><span class="cv">${RN[c.r]}</span><span class="cs">${SYM[c.suit]||''}</span></div><span class="center-suit">${SYM[c.suit]||''}</span>`}</div>`});h+=`</div><button onclick="window._pok()" ${pk?'':'disabled'}>确认</button></div>`;showOv(h)}window._pk=id=>{pk=s.find(c=>c.id===id);show()};window._pok=()=>{hideOv();resolve(pk)};show()})}
 async function tributePhase(){G.ph='tribute';G.busy=true;let ft=G.ord[0]%2;let isDbl=G.ord.length>=2&&G.ord[0]%2===G.ord[1]%2;let emperor=G.ord[0];let losers=[],winners=[];if(isDbl){for(let p=0;p<4;p++){if(p%2!==ft)losers.push(p);else winners.push(p)}}else{let lastLoser=-1;for(let i=G.ord.length-1;i>=0;i--){if(G.ord[i]%2!==ft){lastLoser=G.ord[i];break}}if(lastLoser<0){G.busy=false;return}losers=[lastLoser];winners=[emperor]}let title=isDbl?'双抓上供':'单抓上供';let sub=isDbl?'两人都要上供':`${PN[losers[0]]}上供给皇上(${PN[emperor]})`;showOv(`<div class="m"><h2>${title}</h2><p>${sub}</p><button onclick="hideOv();window._cc&&window._cc()">开始上供</button></div>`);await new Promise(r=>{window._cc=()=>r()});let clog=[];for(let i=0;i<losers.length;i++){let lo=losers[i],wi=winners[i%winners.length],hand=G.hd[lo];if(!hand.length)continue;let tc=lo===0?await pickDlg('选择上供牌',`选一张牌上供给${PN[wi]}`,hand):((s=>s[s.length-1])(srt(hand,G.hui)));G.hd[lo]=G.hd[lo].filter(c=>c.id!==tc.id);G.hd[wi].push(tc);clog.push({from:lo,to:wi,card:tc,type:'tribute'});let tributeCard=cardHTML(tc,'sm');showOv(`<div class="m"><h2 style="color:#ff8a65">上供</h2><p><b>${PN[lo]}</b> 上供给 <b>${PN[wi]}</b></p><div class="played-show">${tributeCard}</div><p class="det">${RN[tc.r]}${SYM[tc.suit]||''}</p><button onclick="hideOv();window._cc&&window._cc()">继续</button></div>`);await new Promise(r=>{window._cc=()=>r()})}for(let i=0;i<winners.length;i++){let wi=winners[i],lo=losers[i%losers.length],hand=G.hd[wi];if(!hand.length)continue;let rc=wi===0?await pickDlg('选择回牌',`选一张牌回给${PN[lo]}`,hand):srt(hand,G.hui)[0];G.hd[wi]=G.hd[wi].filter(c=>c.id!==rc.id);G.hd[lo].push(rc);clog.push({from:wi,to:lo,card:rc,type:'return'});let returnCard=cardHTML(rc,'sm');showOv(`<div class="m"><h2 style="color:#81c784">回牌</h2><p><b>${PN[wi]}</b> 回给 <b>${PN[lo]}</b></p><div class="played-show">${returnCard}</div><p class="det">${RN[rc.r]}${SYM[rc.suit]||''}</p><button onclick="hideOv();window._cc&&window._cc()">继续</button></div>`);await new Promise(r=>{window._cc=()=>r()})}for(let p=0;p<4;p++)G.hd[p]=srt(G.hd[p],G.hui);let summary='';for(let e of clog){let col=red(e.card.suit)?'#ef9a9a':'#e0e0e0';let lbl=e.type==='tribute'?'上供':'回牌';let lblCol=e.type==='tribute'?'#ff8a65':'#81c784';summary+=`<div style="margin:4px 0;font-size:11px;color:rgba(255,255,255,.7)"><b>${PN[e.from]}</b> <span style="color:${lblCol}">[${lbl}]</span> → <b>${PN[e.to]}</b>: <span style="color:${col};font-weight:700">${RN[e.card.r]}${SYM[e.card.suit]||''}</span></div>`}showOv(`<div class="m"><h2>上供完成</h2>${summary}<div style="margin-top:10px"><button onclick="hideOv();window._cc&&window._cc()">继续游戏</button></div></div>`);await new Promise(r=>{window._cc=()=>r()});render();await sl(200);G.busy=false}
 function shouldEndRound(){if(G.ord.length<2)return false;if(G.ord.length>=4)return true;if(G.ord[0]%2===G.ord[1]%2)return true;return false}
-async function loop(){while(G.ph==='play'){render();if(G.dn[G.turn]){G.turn=(G.turn+1)%4;continue}if(G.turn===0)return;G.busy=true;render();await sl(600+Math.random()*400);let play=aiPick(G.turn);if(play){let isAICha=G.lp&&G.lp.type==='single'&&play.type==='pair'&&play.cards.every(c=>c.r===G.lp.cards[0].r);let isAIDian=G.lp&&G.lp.type==='pair'&&G._fromCha&&play.type==='single'&&play.cards[0].r===G.lp.cards[0].r;execPlay(G.turn,play);showAP(G.turn,play.cards,false);playFX(isAICha?'cha':(isAIDian?'dian':play.type));render();await sl(300);let chaDianed=false;if(isAICha){let cr=G.lp.cards[0].r;showBigText('岔!','#f06292');await sl(400);chaDianed=await checkDianPhase(G.turn,cr)}else if(isAIDian){let cr=G.lp.cards[0].r;showBigText('点!','#ab47bc');await sl(400);chaDianed=true}else{chaDianed=await checkChaDian(G.turn,play)}if(chaDianed){G.turn=G.lpp;G.busy=false;render();continue}}else{execPass(G.turn);showAP(G.turn,null,true)}G.busy=false;render();if(G.hd[G.turn].length===0&&!G.dn[G.turn]){G.dn[G.turn]=true;G.ord.push(G.turn);toast(`${PN[G.turn]}出完了!`);await sl(100);if(shouldEndRound()){await endRound();return}}if(!G.lp){G.turn=G.lpp;continue}G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){await endRound();return}}}
-async function afterPlayerPlay(){if(ONLINE.active)return;let play=G.lp,src=G.lpp;if(play){playFX(play.type);let chaDianed=await checkChaDian(src,play);if(chaDianed){G.turn=G.lpp;G.busy=false;render();if(G.turn===0)return;await loop();return}}if(G.hd[0].length===0&&!G.dn[0]){G.dn[0]=true;G.ord.push(0);toast('你出完了!');if(shouldEndRound()){await endRound();return}}if(!G.lp){G.turn=G.lpp;G.busy=false;render();if(G.turn===0)return;await loop();return}G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){await endRound();return}await loop()}
+async function loop(){while(G.ph==='play'){render();if(G.dn[G.turn]){G.turn=(G.turn+1)%4;continue}if(G.turn===0)return;G.busy=true;render();await sl(600+Math.random()*400);let play=aiPick(G.turn);let src=G.turn,srcEmpty=G.hd[src].length===0;if(play){let isAICha=G.lp&&G.lp.type==='single'&&play.type==='pair'&&play.cards.every(c=>c.r===G.lp.cards[0].r);let isAIDian=G.lp&&G.lp.type==='pair'&&G._fromCha&&play.type==='single'&&play.cards[0].r===G.lp.cards[0].r;execPlay(G.turn,play);showAP(G.turn,play.cards,false);playFX(isAICha?'cha':(isAIDian?'dian':play.type));flashAvatar(G.turn);render();await sl(800);let chaDianed=false;try{if(isAICha){let cr=G.lp.cards[0].r;showBigText('岔!','#f06292');await sl(400);chaDianed=await checkDianPhase(G.turn,cr)}else if(isAIDian){let cr=G.lp.cards[0].r;showBigText('点!','#ab47bc');await sl(400);chaDianed=true}else{chaDianed=await checkChaDian(G.turn,play)}}catch(e){console.error('chaDian error',e);chaDianed=false}if(chaDianed){if(G.hd[src].length===0&&!G.dn[src]){G.dn[src]=true;G.ord.push(src);toast(`${PN[src]}出完了!`);await sl(100);if(shouldEndRound()){await endRound();return}}G.turn=G.lpp;G.busy=false;render();continue}}else{execPass(G.turn);showAP(G.turn,null,true)}G.busy=false;render();let justFinished=null;if(G.hd[G.turn].length===0&&!G.dn[G.turn]){G.dn[G.turn]=true;G.ord.push(G.turn);justFinished=G.turn;toast(`${PN[G.turn]}出完了!`);await sl(100);if(shouldEndRound()){await endRound();return}}if(justFinished!==null){G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){await endRound();return}continue}if(!G.lp){if(G._jf){G.turn=jiefeng();toast('接风! '+PN[G.turn]+' 自由出牌');G._jf=false}else{G.turn=G.lpp}continue}if(play&&srcEmpty&&G.hd[src].length===0&&!G.dn[src]){G.lpp=src;G.lp=null;G.turn=jiefeng();toast('接风! '+PN[G.turn]+' 自由出牌');G.busy=false;render();if(G.turn===0)return;continue}G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){await endRound();return}}}
+async function afterPlayerPlay(){if(ONLINE.active)return;let play=G.lp,src=G.lpp,srcEmpty=G.hd[src].length===0;let chaDianed=false;if(play){playFX(play.type);try{chaDianed=await checkChaDian(src,play)}catch(e){console.error('chaDian error',e);chaDianed=false}if(chaDianed){if(G.hd[0].length===0&&!G.dn[0]){G.dn[0]=true;G.ord.push(0);toast('你出完了!');if(shouldEndRound()){await endRound();return}let next=(0+1)%4,s=0;while(G.dn[next]&&s<4){next=(next+1)%4;s++}if(s>=4){await endRound();return}G.turn=next;G.busy=false;render();await loop();return}G.turn=G.lpp;G.busy=false;render();if(G.turn===0)return;await loop();return}}let justFinished=null;if(G.hd[0].length===0&&!G.dn[0]){G.dn[0]=true;G.ord.push(0);justFinished=0;toast('你出完了!');if(shouldEndRound()){await endRound();return}}if(justFinished!==null){G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){await endRound();return}G.busy=false;render();if(G.turn===0)return;await loop();return}if(!G.lp){if(G._jf||(srcEmpty&&src!==G.lpp)){G.lpp=src;G.turn=jiefeng();toast('接风! '+PN[G.turn]+' 自由出牌');G._jf=false;G.busy=false;render();if(G.turn===0)return;await loop();return}else{G.turn=G.lpp;G.busy=false;render();if(G.turn===0)return;await loop();return}}G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){await endRound();return}await loop()}
 function actPlay(){if(G.ph!=='play'||G.turn!==(ONLINE.active?ONLINE.mySeat:0)||G.busy)return;if(ONLINE.active){if(!G.sel.length){toast('请选择牌');return}G.busy=true;wsSend('play',{cards:G.sel});render();return}let sc=G.sel.map(id=>G.hd[0].find(c=>c.id===id)).filter(Boolean);if(!sc.length){toast('请选择牌');return}let play=detect(sc,G.hui);if(!play){toast('无效牌型');return}let free=!G.lp||G.lpp===0;let isCha=false,isDian=false;if(!free&&!beats(play,G.lp)){if(G.lp.type==='single'&&play.type==='pair'&&play.cards.every(c=>c.r===G.lp.cards[0].r)){isCha=true}else if(G.lp.type==='pair'&&G._fromCha&&play.type==='single'&&play.cards[0].r===G.lp.cards[0].r){isDian=true}else{toast('打不过');return}}G.sel=[];G.busy=true;execPlay(0,play);showAP(0,play.cards,false);if(isCha){playFX('cha');showBigText('岔!','#f06292');G._fromCha=true}else if(isDian){playFX('dian');showBigText('点!','#ab47bc');G.lp=null;G.lpp=0;G.ps=0}else{playFX(play.type)}render();if(isCha){(async()=>{let cr=play.cards[0].r;await checkDianPhase(0,cr);afterPlayerPlay()})()}else if(isDian){afterPlayerPlay()}else{afterPlayerPlay()}}
-function actPass(){if(G.ph!=='play'||G.turn!==(ONLINE.active?ONLINE.mySeat:0)||G.busy)return;if(!G.lp||G.lpp===(ONLINE.active?ONLINE.mySeat:0)){toast('必须出牌');return}G.sel=[];if(ONLINE.active){G.busy=true;wsSend('pass',{});render();return}G.busy=true;execPass(0);showAP(0,null,true);render();if(!G.lp){G.turn=G.lpp;G.busy=false;render();if(G.turn===0)return;loop();return}G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){endRound();return}loop()}
+function actPass(){if(G.ph!=='play'||G.turn!==(ONLINE.active?ONLINE.mySeat:0)||G.busy)return;if(!G.lp||G.lpp===(ONLINE.active?ONLINE.mySeat:0)){toast('必须出牌');return}G.sel=[];if(ONLINE.active){G.busy=true;wsSend('pass',{});render();return}G.busy=true;execPass(0);showAP(0,null,true);render();if(!G.lp){if(G._jf){G.turn=jiefeng();toast('接风! '+PN[G.turn]+' 自由出牌');G._jf=false;G.busy=false;render();if(G.turn===0)return;loop();return}else{G.turn=G.lpp;G.busy=false;render();if(G.turn===0)return;loop();return}}G.turn=(G.turn+1)%4;let s=0;while(G.dn[G.turn]&&s<4){G.turn=(G.turn+1)%4;s++}if(s>=4){endRound();return}loop()}
 function actHint(){if(G.ph!=='play'||G.turn!==0||G.busy)return;let free=!G.lp||G.lpp===0,plays=allPlays(G.hd[0],free?null:G.lp,G.hui);if(!plays.length){toast('没有能出的牌');return}G.hnt=(G.hnt+1)%(plays.length+1);if(G.hnt>=plays.length){G.sel=[];G.hnt=0}else G.sel=plays[G.hnt].cards.map(c=>c.id);render()}
 async function newGame(){if(ONLINE.ws){ONLINE.ws.close();ONLINE.ws=null}clearTimeout(ONLINE.reconnectTimer);ONLINE.active=false;ONLINE.mySeat=-1;ONLINE.nickNames=null;ONLINE.code=null;ONLINE.playerId=null;ONLINE.roomPlayers=null;$('connStatus').className='offline';$('connStatus').textContent='单机模式';G.lv=[3,3,3,3];G.stg=[true,false,true,false];G.rnd=0;G.noTr=false;G.win=-1;await newRound()}
 async function newRound(){G.rnd++;G.ph='deal';G.busy=true;G.lp=null;G.lpp=-1;G.ps=0;G.sel=[];G.played=[[],[],[],[]];showOv('<div class="m" style="text-align:center"><h2>第'+G.rnd+'局</h2><p style="color:#aaa">发牌中...</p><div class="radar"></div></div>');await sl(400);let h3=deal();if(G.rnd===1){let t=h3%2;G.stg=[t===0,t===1,t===0,t===1]}G.hui=G.lv[G.stg.indexOf(true)];hideOv();G._dealing=true;render();await sl(1500);G._dealing=false;if(G.rnd>1&&!G.noTr)await tributePhase();G.noTr=false;G.ph='play';G.turn=G.rnd===1?h3:(G.win>=0?G.win:0);G.busy=false;render();await loop()}
@@ -502,7 +578,7 @@ function handleServerMsg(msg){
     case 'game_start':ONLINE.mySeat=d.yourSeat;ONLINE.nickNames=d.seatNames;G.lv=[3,3,3,3];G.stg=[true,false,true,false];G.rnd=0;G.noTr=false;G.win=-1;break;
     case 'state_sync':applyState(d);break;
     case 'your_turn':G.busy=false;render();break;
-    case 'action_result':{let seat=d.seat;if(d.action==='pass'){G.ps++;showAP(seat,null,true)}else if(d.action==='play'||d.action==='cha'||d.action==='dian'){let fxType=d.isCha?'cha':(d.isDian?'dian':d.playType);playFX(fxType);showAP(seat,d.cards,false);let playObj={type:d.playType,rk:0,cards:d.cards};if(d.isCha)playObj.type='pair';if(d.isDian){G.lp=null;G.lpp=seat;G.ps=0}else{G.lp=playObj;G.lpp=seat;G.ps=0}if(!G.played[seat])G.played[seat]=[];G.played[seat].push(...d.cards)}render();break}
+    case 'action_result':{let seat=d.seat;if(d.action==='pass'){G.ps++;showAP(seat,null,true)}else if(d.action==='play'||d.action==='cha'||d.action==='dian'){let fxType=d.isCha?'cha':(d.isDian?'dian':d.playType);playFX(fxType);showAP(seat,d.cards,false);flashAvatar(seat);let playObj={type:d.playType,rk:0,cards:d.cards};if(d.isCha)playObj.type='pair';if(d.isDian){G.lp=null;G.lpp=seat;G.ps=0}else{G.lp=playObj;G.lpp=seat;G.ps=0}if(!G.played[seat])G.played[seat]=[];G.played[seat].push(...d.cards)}render();break}
     case 'player_done':toast((ONLINE.nickNames&&ONLINE.nickNames[d.seat]?ONLINE.nickNames[d.seat]:PN[d.seat])+'出完了!');break;
     case 'interrupt_req':handleInterruptReq(d);break;
     case 'tribute_req':handleTributeReq(d);break;
@@ -512,6 +588,7 @@ function handleServerMsg(msg){
     case 'game_over':G.ph='end';G.busy=false;showOnlineGameOver(d);break;
     case 'error':toast(d.message);G.busy=false;break;
     case 'player_left':toast((ONLINE.nickNames?ONLINE.nickNames[d.seat]:'玩家')+'断开连接');break;
+    case 'toast':toast(d.message||'');break;
   }
 }
 function applyState(s){
@@ -586,6 +663,42 @@ function showLobby(){showOv(`<div class="m"><h2>144</h2><p>四人两两队 · �
 function showOnlineSetup(){let savedNick=localStorage.getItem('nick')||'';let connected=ONLINE.active?'<span style="color:#81c784">✓ 已连接</span>':'';showOv(`<div class="m"><h2>联机模式</h2><div style="margin:10px 0"><input class="lobby-input" id="cfgNick" placeholder="你的昵称" value="${savedNick}"></div>${connected}<button class="lobby-btn online" onclick="connectAndLobby()">进入大厅</button><button class="lobby-btn secondary" onclick="showLobby()">返回</button></div>`)}
 function connectAndLobby(){let nick=$('cfgNick').value.trim()||'玩家';localStorage.setItem('nick',nick);ONLINE.nick=nick;showMainLobby()}
 function showMainLobby(){showOv(`<div class="m"><h2>联机大厅</h2><p>昵称: <b>${ONLINE.nick}</b></p><button class="lobby-btn primary" onclick="hideOv();createRoom('${ONLINE.nick}')">创建房间</button><div style="margin:8px 0"><input class="lobby-input" id="joinId" placeholder="输入房间号加入"></div><button class="lobby-btn online" onclick="hideOv();joinRoom(document.getElementById('joinId').value,'${ONLINE.nick}')">加入房间</button><button class="lobby-btn secondary" onclick="showLobby()">返回</button></div>`)}
+let _audioCtx=null,_musicOn=true,_musicNodes=[],_melodyTimer=null,_padNode=null,_musicStarted=false;
+function getAudioCtx(){if(!_audioCtx)_audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(_audioCtx.state==='suspended')_audioCtx.resume();return _audioCtx}
+function createReverb(ctx){let len=ctx.sampleRate*2,buf=ctx.createBuffer(2,len,ctx.sampleRate);for(let ch=0;ch<2;ch++){let d=buf.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.5)}let conv=ctx.createConvolver();conv.buffer=buf;return conv}
+function startMusic(){let ctx=getAudioCtx(),sr=ctx.sampleRate;
+let master=ctx.createGain();master.gain.value=0.25;
+let comp=ctx.createDynamicsCompressor();comp.threshold.value=-10;comp.ratio.value=3;comp.attack.value=0.003;
+let rev=createReverb(ctx);let revG=ctx.createGain();revG.gain.value=0.12;
+master.connect(comp);comp.connect(ctx.destination);master.connect(rev);rev.connect(revG);revG.connect(ctx.destination);
+_musicNodes.push(master,comp,rev,revG);
+function makeNoise(dur){let b=ctx.createBuffer(1,sr*dur,sr);let d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;return b}
+let noiseBuf=makeNoise(0.1);
+function kick(t,vol){let o=ctx.createOscillator();o.type='sine';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(40,t+0.12);let g=ctx.createGain();g.gain.setValueAtTime(vol||0.12,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.15);o.connect(g);g.connect(master);o.start(t);o.stop(t+0.2)}
+function hat(t,vol){let s=ctx.createBufferSource();s.buffer=noiseBuf;let g=ctx.createGain();g.gain.setValueAtTime(vol||0.04,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.04);let f=ctx.createBiquadFilter();f.type='highpass';f.frequency.value=6000;s.connect(f);f.connect(g);g.connect(master);s.start(t);s.stop(t+0.06)}
+function snare(t){let s=ctx.createBufferSource();s.buffer=noiseBuf;let ng=ctx.createGain();ng.gain.setValueAtTime(0.06,t);ng.gain.exponentialRampToValueAtTime(0.001,t+0.1);let f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=3500;f.Q.value=1;s.connect(f);f.connect(ng);ng.connect(master);s.start(t);s.stop(t+0.12);let o=ctx.createOscillator();o.type='triangle';o.frequency.setValueAtTime(180,t);o.frequency.exponentialRampToValueAtTime(80,t+0.06);let og=ctx.createGain();og.gain.setValueAtTime(0.05,t);og.gain.exponentialRampToValueAtTime(0.001,t+0.08);o.connect(og);og.connect(master);o.start(t);o.stop(t+0.1)}
+function bass(freq,t,dur){let o=ctx.createOscillator();o.type='sawtooth';o.frequency.value=freq;let o2=ctx.createOscillator();o2.type='triangle';o2.frequency.value=freq;let g=ctx.createGain();g.gain.setValueAtTime(0.1,t);g.gain.setValueAtTime(0.1,t+dur*0.6);g.gain.exponentialRampToValueAtTime(0.001,t+dur);let f=ctx.createBiquadFilter();f.type='lowpass';f.frequency.value=500;f.Q.value=2;o.connect(f);o2.connect(f);f.connect(g);g.connect(master);o.start(t);o.stop(t+dur+0.02);o2.start(t);o2.stop(t+dur+0.02)}
+function chord(freqs,t,dur){freqs.forEach(freq=>{let o=ctx.createOscillator();o.type='triangle';o.frequency.value=freq;let g=ctx.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.035,t+0.02);g.gain.setValueAtTime(0.035,t+dur*0.7);g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+0.02)})}
+function mel(freq,t,dur){let o=ctx.createOscillator();o.type='square';o.frequency.value=freq;let vib=ctx.createOscillator();vib.frequency.value=5;let vG=ctx.createGain();vG.gain.value=4;vib.connect(vG);vG.connect(o.frequency);vib.start(t);vib.stop(t+dur+0.05);let g=ctx.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.055,t+0.015);g.gain.setValueAtTime(0.05,t+dur*0.5);g.gain.exponentialRampToValueAtTime(0.001,t+dur);let f=ctx.createBiquadFilter();f.type='lowpass';f.frequency.value=2800;f.Q.value=0.8;o.connect(f);f.connect(g);g.connect(master);o.start(t);o.stop(t+dur+0.05)}
+function counter(freq,t,dur){let o=ctx.createOscillator();o.type='sine';o.frequency.value=freq;let g=ctx.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.03,t+0.03);g.gain.exponentialRampToValueAtTime(0.001,t+dur);o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+0.02)}
+let chords=[[261.63,329.63,392],[349.23,440,523.25],[392,493.88,587.33],[261.63,329.63,392],[349.23,440,523.25],[293.66,369.99,440],[392,493.88,587.33],[261.63,329.63,392]];
+let bassLine=[[130.81,196,130.81,196],[174.61,261.63,174.61,261.63],[196,293.66,196,293.66],[130.81,196,130.81,196],[174.61,261.63,174.61,261.63],[146.83,220,146.83,220],[196,293.66,196,293.66],[130.81,196,196,261.63]];
+let mels=[[659.25,0,783.99,0,659.25,587.33,523.25,0],[523.25,0,659.25,0,587.33,523.25,440,0],[587.33,659.25,783.99,0,880,783.99,659.25,0],[783.99,0,659.25,587.33,523.25,0,587.33,523.25],[523.25,587.33,659.25,0,783.99,0,880,783.99],[659.25,0,587.33,523.25,440,0,523.25,0],[880,783.99,659.25,0,587.33,0,523.25,587.33],[783.99,659.25,587.33,523.25,659.25,0,0,0]];
+let ctrs=[[0,0,0,392,0,0,0,329.63],[0,0,0,349.23,0,0,0,293.66],[0,0,0,392,0,0,0,440],[0,0,0,329.63,0,392,0,0],[0,0,0,440,0,0,0,392],[0,0,0,349.23,0,0,0,293.66],[0,0,0,392,0,349.23,0,0],[0,0,0,329.63,0,0,0,0]];
+let bpm=140,beat=60/bpm,half=beat/2,barLen=beat*4;
+let ci=0;
+function scheduleBar(bt){let ch=chords[ci%chords.length],bl=bassLine[ci%bassLine.length],ml=mels[ci%mels.length],ct=ctrs[ci%ctrs.length];
+for(let i=0;i<4;i++){let t=bt+i*beat;bass(bl[i],t,beat*0.85);kick(t,i===0?0.14:0.09);hat(t+half,0.035);if(i===1||i===3)snare(t)}
+chord(ch,bt,barLen*0.95);
+for(let i=0;i<8;i++){let t=bt+i*half;if(ml[i]>0)mel(ml[i],t,half*0.85);if(ct[i]>0)counter(ct[i],t+half*0.25,half*0.7)}
+ci++}
+let lookAhead=0.12,nextBar=ctx.currentTime+0.05;scheduleBar(nextBar);nextBar+=barLen;
+let scheduler=setInterval(()=>{if(!_musicOn){clearInterval(scheduler);return}while(nextBar<ctx.currentTime+lookAhead){scheduleBar(nextBar);nextBar+=barLen}},40);
+_musicNodes._scheduler=scheduler}
+function stopMusic(){_musicOn=false;if(_melodyTimer){clearTimeout(_melodyTimer);_melodyTimer=null}if(_musicNodes._scheduler){clearInterval(_musicNodes._scheduler);_musicNodes._scheduler=null}_musicNodes.forEach(n=>{try{if(n.stop)n.stop()}catch(e){}try{n.disconnect()}catch(e){}});_musicNodes=[];_padNode=null}
+function toggleMusic(){_musicOn=!_musicOn;let btn=$('musicBtn');if(_musicOn){btn.classList.add('on');btn.textContent='♫';startMusic()}else{btn.classList.remove('on');btn.textContent='♪';stopMusic()}}
+(function(){function autoStartMusic(){if(_musicStarted)return;_musicStarted=true;if(_musicOn){let btn=$('musicBtn');if(btn){btn.classList.add('on');btn.textContent='♫'}startMusic()}document.removeEventListener('click',autoStartMusic);document.removeEventListener('touchstart',autoStartMusic)}document.addEventListener('click',autoStartMusic);document.addEventListener('touchstart',autoStartMusic)})();
+function playCardSFX(type){if(!_audioCtx)return;let ctx=_audioCtx;let now=ctx.currentTime;if(type==='play'){let o=ctx.createOscillator();o.type='triangle';o.frequency.value=800;let g=ctx.createGain();g.gain.setValueAtTime(0.06,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.12);o.connect(g);g.connect(ctx.destination);o.start(now);o.stop(now+0.15)}else if(type==='bomb'||type==='cha'||type==='a44'){let o=ctx.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(200,now);o.frequency.exponentialRampToValueAtTime(80,now+0.3);let g=ctx.createGain();g.gain.setValueAtTime(0.08,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.35);let f=ctx.createBiquadFilter();f.type='lowpass';f.frequency.value=600;o.connect(f);f.connect(g);g.connect(ctx.destination);o.start(now);o.stop(now+0.4)}else if(type==='pass'){let o=ctx.createOscillator();o.type='sine';o.frequency.value=300;let g=ctx.createGain();g.gain.setValueAtTime(0.03,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.1);o.connect(g);g.connect(ctx.destination);o.start(now);o.stop(now+0.12)}else if(type==='dian'){let o=ctx.createOscillator();o.type='square';o.frequency.setValueAtTime(600,now);o.frequency.exponentialRampToValueAtTime(300,now+0.2);let g=ctx.createGain();g.gain.setValueAtTime(0.05,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.25);let f=ctx.createBiquadFilter();f.type='lowpass';f.frequency.value=800;o.connect(f);f.connect(g);g.connect(ctx.destination);o.start(now);o.stop(now+0.3)}}
 (function(){
   var tryFS = function(){
     var el = document.documentElement;

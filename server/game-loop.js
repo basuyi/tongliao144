@@ -202,6 +202,7 @@ class GameLoop {
 
     if (isCha) {
       this.checkDianChain(seat, () => {
+        if (this.checkAllFinished()) return;
         this.G.turn = this.G.lpp;
         this.broadcastStates();
         this.advanceTurn();
@@ -216,9 +217,30 @@ class GameLoop {
       return;
     }
 
+    const srcSeat = seat;
+    const srcEmptyBefore = this.G.hd[seat].length === 0;
     this.checkChaChain(seat, () => {
       if (!this.G.lp) {
+        if (this.G._jf || (srcEmptyBefore && this.G.hd[srcSeat].length === 0 && this.G.lpp !== srcSeat)) {
+          this.G.lpp = srcSeat;
+          this.G.turn = GL.jiefeng(this.G);
+          this.G._jf = false;
+          this.rm.broadcast(this.room, { type: 'toast', data: { message: '接风! ' + (this.room.players.find(p => p.seat === this.G.turn)?.nickname || '玩家') + ' 自由出牌' } });
+          this.broadcastStates();
+          this.advanceTurn();
+          return;
+        }
         this.G.turn = this.G.lpp;
+        this.broadcastStates();
+        this.advanceTurn();
+        return;
+      }
+      if (srcEmptyBefore && this.G.hd[srcSeat].length === 0) {
+        this.G.lpp = srcSeat;
+        this.G.lp = null;
+        this.G.turn = GL.jiefeng(this.G);
+        this.G._jf = false;
+        this.rm.broadcast(this.room, { type: 'toast', data: { message: '接风! ' + (this.room.players.find(p => p.seat === this.G.turn)?.nickname || '玩家') + ' 自由出牌' } });
         this.broadcastStates();
         this.advanceTurn();
         return;
@@ -230,13 +252,33 @@ class GameLoop {
 
   afterPass() {
     if (!this.G.lp) {
-      this.G.turn = this.G.lpp;
+      if (this.G._jf) {
+        this.G.turn = GL.jiefeng(this.G);
+        this.G._jf = false;
+      } else {
+        this.G.turn = this.G.lpp;
+      }
       this.broadcastStates();
       this.advanceTurn();
       return;
     }
     this.G.turn = (this.G.turn + 1) % 4;
     this.skipDone();
+  }
+
+  checkAllFinished() {
+    for (let p = 0; p < 4; p++) {
+      if (this.G.hd[p].length === 0 && !this.G.dn[p]) {
+        this.G.dn[p] = true;
+        this.G.ord.push(p);
+        this.rm.broadcast(this.room, {
+          type: 'player_done',
+          data: { seat: p, order: this.G.ord.length },
+        });
+      }
+    }
+    if (GL.shouldEndRound(this.G)) { this.doEndRound(); return true; }
+    return false;
   }
 
   checkChaChain(srcPlayer, callback) {
@@ -277,6 +319,7 @@ class GameLoop {
           data: { seat: p, action: 'cha', cards: chaPlay.cards, playType: 'pair' },
         });
         this.checkDianChain(p, () => {
+          if (this.checkAllFinished()) return;
           this.G.turn = this.G.lpp;
           this.broadcastStates();
           this.advanceTurn();
@@ -408,6 +451,7 @@ class GameLoop {
           data: { seat, action: 'cha', cards: chaPlay.cards, playType: 'pair' },
         });
         this.checkDianChain(seat, () => {
+          if (this.checkAllFinished()) return;
           this.G.turn = this.G.lpp;
           this.broadcastStates();
           this.advanceTurn();

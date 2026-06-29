@@ -121,7 +121,15 @@ GL.execPlay = function(G,pi,play){
 
 GL.execPass = function(G,pi){
   G.ps++;var act=4-G.ord.length;
-  if(G.ps>=act-1){G.lp=null;G.ps=0}
+  if(G.ps>=act-1){G._jf=(G.hd[G.lpp]&&G.hd[G.lpp].length===0);G.lp=null;G.ps=0}
+};
+
+GL.jiefeng = function(G){
+  var tm=G.lpp%2;
+  for(var i=0;i<4;i++){if(i!==G.lpp&&i%2===tm&&!G.dn[i])return i}
+  var next=(G.lpp+1)%4,s=0;
+  while(s<4){if(!G.dn[next])return next;next=(next+1)%4;s++}
+  return (G.lpp+1)%4;
 };
 
 GL.shouldEndRound = function(G){
