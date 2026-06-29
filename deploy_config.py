@@ -4,10 +4,11 @@ import os
 
 def get_config():
     base_dir = os.path.dirname(os.path.abspath(__file__))
+    env = _load_env(os.path.join(base_dir, '.env'))
     return {
-        'server_ip': os.getenv('SERVER_IP', _read_file(os.path.join(base_dir, '.server_ip'))),
+        'server_ip': env.get('SERVER_IP', ''),
         'ssh_user': 'root',
-        'ssh_pass': os.getenv('SERVER_PASSWORD', _read_file(os.path.join(base_dir, '.ssh_pass'))),
+        'ssh_pass': env.get('SERVER_PASSWORD', ''),
         'remote_base': '/var/www/game',
         'remote_public': '/var/www/game/public',
         'remote_server': '/var/www/game/server',
@@ -16,9 +17,15 @@ def get_config():
         'local_js': os.path.join(base_dir, 'outputs', 'game-logic.js'),
     }
 
-def _read_file(path):
+def _load_env(path):
+    env = {}
     try:
-        with open(path) as f:
-            return f.read().strip()
+        with open(path, encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, _, value = line.partition('=')
+                    env[key.strip()] = value.strip()
     except FileNotFoundError:
-        return ''
+        pass
+    return env

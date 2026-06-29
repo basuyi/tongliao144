@@ -1,7 +1,4 @@
 # Sensitive files
-.ssh_pass
-.server_ip
-.ak_config
 .env
 
 # Node
